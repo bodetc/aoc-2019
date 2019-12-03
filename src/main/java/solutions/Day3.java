@@ -1,5 +1,7 @@
 package solutions;
 
+import utils.FileUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -137,5 +139,12 @@ public class Day3 {
 
     public static int findClosestIntersection(String a, String b) {
         return findClosestIntersection(new Line(a), new Line(b));
+    }
+
+    public static void main(String[] args) {
+        List<String> paths = FileUtils.readLines("day3/input.txt").collect(Collectors.toList());
+
+        int taxiDistance = findClosestIntersection( paths.get(0), paths.get(1));
+        System.out.println("Manhattan (sic) distance: " + taxiDistance);
     }
 }
