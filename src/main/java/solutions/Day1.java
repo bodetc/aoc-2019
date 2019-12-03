@@ -9,9 +9,9 @@ import java.util.stream.Stream;
 
 public class Day1 {
 
-    private static final UnaryOperator<Integer> computeFuel = mass -> mass / 3 - 2;
+    static final UnaryOperator<Integer> computeFuel = mass -> mass / 3 - 2;
     private static final Predicate<Integer> isMassPositive = mass -> mass > 0;
-    private static final UnaryOperator<Integer> computeFuelForFuel = moduleMass ->
+    static final UnaryOperator<Integer> computeFuelForFuel = moduleMass ->
             Stream.iterate(moduleMass, isMassPositive, computeFuel)
                     .filter(mass -> !Objects.equals(mass, moduleMass)) // Only fuel mass is asked, not launch mass
                     .reduce(0, Integer::sum);
