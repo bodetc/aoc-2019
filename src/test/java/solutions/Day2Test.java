@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class Day2Test {
 
     @Test
-    void intcode() {
+    void testIntcode() {
         int[] input = {1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50};
         Day2.intcode(input);
 
