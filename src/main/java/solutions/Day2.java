@@ -31,24 +31,41 @@ public class Day2 {
         throw new IllegalStateException("Intcode program should end when encountering 99.");
     }
 
+    private static int runIntcode(int[] input, int noun, int verb) {
+        int[] program = input.clone();
+        program[1]=noun;
+        program[2]=verb;
+
+        int[] output = intcode(program);
+
+        return output[0];
+    }
+
+    private static int[] searchIntcode(int[] input, int targetOutput) {
+        for(int noun=0; noun<100; noun++) {
+            for(int verb=0; verb<100; verb++) {
+                int output = runIntcode(input, noun, verb);
+                if(output==targetOutput) {
+                    return new int[] {noun, verb};
+                }
+            }
+        }
+        throw new IllegalStateException("Target output could not be found.");
+    }
+
     public static void main(String[] args) {
         int[] input = FileUtils.readCommaSeparatedValues("day2/input.txt")
                 .mapToInt(Integer::parseInt)
                 .toArray();
 
-        // Change program as instructed
-        input[1]=12;
-        input[2]=2;
+        int value = runIntcode(input, 12, 2);
+        System.out.println("Output for first star: " + value);
 
-        int[] output = intcode(input);
-
-        String outputString = Arrays.stream(output)
-                .mapToObj(Integer::toString)
-                .collect(Collectors.joining(","));
-
-        System.out.println("Intcode output: " + outputString);
-
-        System.out.println("Value is left at position 0: " + output[0]);
+        int[] result = searchIntcode(input, 19690720);
+        int noun=result[0];
+        int verb=result[1];
+        int answer = noun * 100 + verb;
+        System.out.println("noun=" + noun + ", verb=" + verb + ", answer=" + answer);
     }
 }
 
