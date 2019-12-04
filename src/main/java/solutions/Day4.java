@@ -48,11 +48,10 @@ public class Day4 {
     private static boolean hasExactlyTwoSameAdjacentDigits(int[] digits) {
         for (int i = 0; i < digits.length - 1; i++) {
             int digit = digits[i];
-            if (digit == digits[i + 1]) {
-                if ((i == digits.length - 2 || digits[i + 2] != digit)
-                        && (i == 0 || digits[i - 1] != digit)) {
-                    return true;
-                }
+            if ((digit == digits[i + 1])
+                    && (i == digits.length - 2 || digits[i + 2] != digit)
+                    && (i == 0 || digits[i - 1] != digit)) {
+                return true;
             }
         }
         return false;
