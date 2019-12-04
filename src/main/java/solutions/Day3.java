@@ -1,11 +1,13 @@
 package solutions;
 
 import utils.FileUtils;
+import utils.MathUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
 import static utils.FileUtils.COMMA_SEPARATOR;
@@ -100,6 +102,18 @@ public class Day3 {
                 return Optional.empty();
             }
         }
+
+        private boolean isColinear(Point point) {
+            return (end.x - start.x) * (point.y - start.y) == (point.x - start.x) * (end.y - start.y);
+        }
+
+        private boolean contains(Point point) {
+            return isColinear(point) && MathUtils.isBetween(start.x, end.x, point.x)  && MathUtils.isBetween(start.y, end.y, point.y);
+        }
+
+        private int length() {
+            return start.taxiDistance(end);
+        }
     }
 
     private static class Line {
@@ -126,19 +140,46 @@ public class Day3 {
                     .map(Optional::get)
                     .collect(Collectors.toList());
         }
+
+        private int delay(Point point) {
+            int delay = 0;
+            for (Segment segment : segments) {
+                if(segment.contains(point)) {
+                    delay+=point.taxiDistance(segment.start);
+                    return delay;
+                } else {
+                    delay+=segment.length();
+                }
+            }
+            return delay;
+        }
     }
 
-    private static int findClosestIntersection(Line a, Line b) {
+
+    private static int findIntersection(Line a, Line b, ToIntFunction<Point> distance) {
         Point origin = new Point(0, 0);
         return a.intersect(b).stream() // Find intersections
                 .filter(Predicate.not(origin::equals)) // Remove origin
-                .mapToInt(origin::taxiDistance) // Get distances
+                .mapToInt(distance) // Get distances
                 .min() // Get closest distance
                 .orElseThrow();
     }
 
+    private static int findClosestIntersection(Line a, Line b) {
+        Point origin = new Point(0, 0);
+        return findIntersection(a, b, origin::taxiDistance);
+    }
+
     public static int findClosestIntersection(String a, String b) {
         return findClosestIntersection(new Line(a), new Line(b));
+    }
+
+    private static int findSmallestDelayIntersection(Line a, Line b) {
+        return findIntersection(a, b, point -> a.delay(point) + b.delay(point));
+    }
+
+    public static int findSmallestDelayIntersection(String a, String b) {
+        return findSmallestDelayIntersection(new Line(a), new Line(b));
     }
 
     public static void main(String[] args) {
@@ -146,5 +187,8 @@ public class Day3 {
 
         int taxiDistance = findClosestIntersection( paths.get(0), paths.get(1));
         System.out.println("Manhattan (sic) distance: " + taxiDistance);
+
+        int smallestDelay = findSmallestDelayIntersection( paths.get(0), paths.get(1));
+        System.out.println("Smallest delay: " + smallestDelay);
     }
 }
