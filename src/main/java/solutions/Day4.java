@@ -45,6 +45,19 @@ public class Day4 {
         return false;
     }
 
+    private static boolean hasExactlyTwoSameAdjacentDigits(int[] digits) {
+        for (int i = 0; i < digits.length - 1; i++) {
+            int digit = digits[i];
+            if (digit == digits[i + 1]) {
+                if ((i == digits.length - 2 || digits[i + 2] != digit)
+                        && (i == 0 || digits[i - 1] != digit)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private static boolean isMonotonouslyIncreasing(int[] digits) {
         for (int i = 0; i < digits.length - 1; i++) {
             if (digits[i] > digits[i + 1]) {
@@ -63,16 +76,28 @@ public class Day4 {
                 .mapToInt(Day4::toNumber);
     }
 
+    private static IntStream exactlyValid(IntStream input) {
+        return input
+                .mapToObj(Day4::toDigits)
+                .filter(Day4::is6digits)
+                .filter(Day4::hasExactlyTwoSameAdjacentDigits)
+                .filter(Day4::isMonotonouslyIncreasing)
+                .mapToInt(Day4::toNumber);
+    }
+
     static boolean isValid(int number) {
-        return valid(IntStream.of(number)).count()==1;
+        return valid(IntStream.of(number)).count() == 1;
+    }
+
+    static boolean isExactlyValid(int number) {
+        return exactlyValid(IntStream.of(number)).count() == 1;
     }
 
     public static void main(String[] args) {
         IntStream validNumbers = valid(IntStream.range(402328, 864247));
-
         System.out.println("Number of valid passwords: " + validNumbers.count());
 
-        valid(IntStream.range(402328, 864247))
-                .forEach(System.out::println);
+        IntStream exactlyValidNumbers = exactlyValid(IntStream.range(402328, 864247));
+        System.out.println("Number of exactly valid passwords: " + exactlyValidNumbers.count());
     }
 }
