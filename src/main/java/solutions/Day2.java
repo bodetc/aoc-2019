@@ -2,10 +2,6 @@ package solutions;
 
 import utils.FileUtils;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 public class Day2 {
 
     public static int[] intcode(int[] input) {
