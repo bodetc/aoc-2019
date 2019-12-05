@@ -31,32 +31,30 @@ public class IntcodeComputer {
 
         while (position < program.length) {
             int instruction = program[position];
-            int opcode = getOptcode(instruction);
+            OpCode opcode = OpCode.fromInstruction(instruction);
 
-            if (opcode == 99) {
+            if (opcode == OpCode.EXIT) {
                 return;
             }
 
+
             int pos1 = program[position + 1];
             int pos2 = program[position + 2];
-            int posR = program[position + 3];
+            int posR = program[position + opcode.getOutputOffset()];
 
-            if (opcode == 1) {
-                program[posR] = program[pos1] + program[pos2];
-            } else if (opcode == 2) {
-                program[posR] = program[pos1] * program[pos2];
-            } else {
-                throw new IllegalStateException("Encountering an unknown opcode means something went wrong.");
+            switch (opcode) {
+                case ADD:
+                    program[posR] = program[pos1] + program[pos2];
+                    break;
+                case MULTIPLY:
+                    program[posR] = program[pos1] * program[pos2];
+                    break;
+                default:
+                    throw new IllegalStateException();
             }
-
-            position+=4;
+            position+=opcode.getPositionChange();
         }
 
         throw new IllegalStateException("Intcode savedProgram should end when encountering 99.");
-    }
-
-
-    private static int getOptcode(int instruction) {
-        return instruction % 100;
     }
 }
