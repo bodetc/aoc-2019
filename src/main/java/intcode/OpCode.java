@@ -9,12 +9,12 @@ enum OpCode implements ValueBase<Integer> {
     EXIT(99, 0);
 
     private final int value;
-    private final int inputParameterCount;
+    private final int numberOfInputParameters;
 
 
-    OpCode(int value, int inputParameterCount) {
+    OpCode(int value, int numberOfInputParameters) {
         this.value = value;
-        this.inputParameterCount = inputParameterCount;
+        this.numberOfInputParameters = numberOfInputParameters;
     }
 
     @Override
@@ -22,16 +22,16 @@ enum OpCode implements ValueBase<Integer> {
         return value;
     }
 
-    public int getInputParameterCount() {
-        return inputParameterCount;
+    public int getNumberOfInputParameters() {
+        return numberOfInputParameters;
     }
 
     public int getOutputOffset() {
-        return inputParameterCount +1;
+        return numberOfInputParameters +1;
     }
 
     public int getPositionChange() {
-        return inputParameterCount +2;
+        return numberOfInputParameters +2;
     }
 
     public static OpCode fromInstruction(int instruction) {

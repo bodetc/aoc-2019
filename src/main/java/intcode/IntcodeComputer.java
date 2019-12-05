@@ -37,17 +37,23 @@ public class IntcodeComputer {
                 return;
             }
 
+            int numberOfInputParameters = opcode.getNumberOfInputParameters();
+            ParameterMode[] modes = ParameterMode.fromInstruction(instruction, numberOfInputParameters);
 
-            int pos1 = program[position + 1];
-            int pos2 = program[position + 2];
-            int posR = program[position + opcode.getOutputOffset()];
+            int[] parameters = new int[numberOfInputParameters];
+            for(int i = 0; i<numberOfInputParameters; i++) {
+                int parameterPosition = position + i + 1;
+                parameters[i] = modes[i]==ParameterMode.IMMEDIATE ? program[parameterPosition] : program[program[parameterPosition]];
+            }
+
+            int outputPosition = program[position + opcode.getOutputOffset()];
 
             switch (opcode) {
                 case ADD:
-                    program[posR] = program[pos1] + program[pos2];
+                    program[outputPosition] = parameters[0] + parameters[1];
                     break;
                 case MULTIPLY:
-                    program[posR] = program[pos1] * program[pos2];
+                    program[outputPosition] = parameters[0] * parameters[1];
                     break;
                 default:
                     throw new IllegalStateException();
