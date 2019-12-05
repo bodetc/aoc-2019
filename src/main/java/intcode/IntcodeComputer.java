@@ -24,7 +24,7 @@ public class IntcodeComputer {
         return program;
     }
 
-    int runIO(int input) {
+    public int runIO(int input) {
         program = this.savedProgram.clone();
         return intcode(input);
     }
