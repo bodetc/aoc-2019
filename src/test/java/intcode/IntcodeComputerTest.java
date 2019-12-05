@@ -39,6 +39,12 @@ class IntcodeComputerTest {
     }
 
     @Test
+    void testIntcode6() {
+        int[] program = new int[]{1002,4,3,4,33};
+        assertArrayEquals(new int[]{1002,4,3,4,99}, new IntcodeComputer(program).run());
+    }
+
+    @Test
     void testRunNounVerb() {
         int[] input = FileUtils.readCommaSeparatedValues("day2/input.txt")
                 .mapToInt(Integer::parseInt)
