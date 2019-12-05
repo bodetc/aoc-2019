@@ -31,6 +31,6 @@ enum ParameterMode implements ValueBase<Integer> {
             modes.add(POSITION);
         }
 
-        return modes.toArray(new ParameterMode[0]);
+        return modes.toArray(ParameterMode[]::new);
     }
 }

@@ -1,21 +1,22 @@
 package intcode;
 
-import java.util.Arrays;
-import java.util.Optional;
-
 enum OpCode implements ValueBase<Integer> {
-    ADD(1, 2) ,
-    MULTIPLY(2, 2),
-    EXIT(99, 0);
+    ADD(1, 2, 1),
+    MULTIPLY(2, 2, 1),
+    INPUT(3, 0, 1),
+    OUTPUT(4, 1, 0),
+    EXIT(99, 0, 0);
 
     private final int value;
-    private final int numberOfInputParameters;
+    private final int nbInputParam;
+    private final int nbOutputParam;
 
-
-    OpCode(int value, int numberOfInputParameters) {
+    OpCode(int value, int nbInputParam, int nbOutputParam) {
         this.value = value;
-        this.numberOfInputParameters = numberOfInputParameters;
+        this.nbInputParam = nbInputParam;
+        this.nbOutputParam = nbOutputParam;
     }
+
 
     @Override
     public Integer getValue() {
@@ -23,18 +24,18 @@ enum OpCode implements ValueBase<Integer> {
     }
 
     public int getNumberOfInputParameters() {
-        return numberOfInputParameters;
+        return nbInputParam;
     }
 
     public int getOutputOffset() {
-        return numberOfInputParameters +1;
+        return nbOutputParam > 0 ? nbInputParam + 1 : 0;
     }
 
     public int getPositionChange() {
-        return numberOfInputParameters +2;
+        return nbInputParam + nbOutputParam + 1;
     }
 
     public static OpCode fromInstruction(int instruction) {
-        return ValueBase.fromValue(values(), instruction%100);
+        return ValueBase.fromValue(values(), instruction % 100);
     }
 }
