@@ -66,6 +66,26 @@ public class IntcodeComputer {
                     System.out.println("output: " + parameters[0]);
                     output = parameters[0];
                     break;
+                case JUMP_IF_TRUE:
+                    if(parameters[0]>0) {
+                        position=parameters[1];
+                    } else {
+                        position+=3;
+                    }
+                    break;
+                case JUMP_IF_FALSE:
+                    if(parameters[0]==0) {
+                        position=parameters[1];
+                    } else {
+                        position+=3;
+                    }
+                    break;
+                case LESS_THAN:
+                    program[outputPosition] = parameters[0] < parameters[1] ? 1 : 0;
+                    break;
+                case EQUALS:
+                    program[outputPosition] = parameters[0] == parameters[1] ? 1 : 0;
+                    break;
                 default:
                     throw new IllegalStateException();
             }

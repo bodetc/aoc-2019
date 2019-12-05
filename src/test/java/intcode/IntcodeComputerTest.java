@@ -9,6 +9,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class IntcodeComputerTest {
 
     @Test
+    void regressionTestFirstStar() {
+        int[] program = FileUtils.readCommaSeparatedValues("day5/input.txt")
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        IntcodeComputer computer = new IntcodeComputer(program);
+
+        assertEquals(13787043, computer.runIO(1));
+    }
+
+    @Test
+    void testRunNounVerb() {
+        int[] input = FileUtils.readCommaSeparatedValues("day2/input.txt")
+                .mapToInt(Integer::parseInt)
+                .toArray();
+
+        assertEquals(6327510, new IntcodeComputer(input).runNounVerb(12, 2));
+    }
+
+    @Test
     void testIntcode1() {
         int[] program = new int[]{1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50};
         assertArrayEquals(new int[]{3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50}, new IntcodeComputer(program).run());
@@ -52,16 +71,55 @@ class IntcodeComputerTest {
 
     @Test
     void testIntcodeIO() {
-        int[] program = new int[]{3,0,4,0,99};
-        assertEquals(42, new IntcodeComputer(program).runIO(42));
+        IntcodeComputer computer = new IntcodeComputer(new int[]{3,0,4,0,99});
+        assertEquals(42, computer.runIO(42));
     }
 
     @Test
-    void testRunNounVerb() {
-        int[] input = FileUtils.readCommaSeparatedValues("day2/input.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
+    void testIntcodeEqualPosition() {
+        IntcodeComputer computer = new IntcodeComputer(new int[]{3,9,8,9,10,9,4,9,99,-1,8});
+        assertEquals(1, computer.runIO(8));
+        assertEquals(0, computer.runIO(7));
+        assertEquals(0, computer.runIO(9));
+    }
 
-        assertEquals(6327510, new IntcodeComputer(input).runNounVerb(12, 2));
+    @Test
+    void testIntcodeLessThanPosition() {
+        IntcodeComputer computer = new IntcodeComputer(new int[]{3,9,7,9,10,9,4,9,99,-1,8});
+        assertEquals(0, computer.runIO(8));
+        assertEquals(1, computer.runIO(7));
+        assertEquals(0, computer.runIO(9));
+    }
+
+    @Test
+    void testIntcodeEqualImmediate() {
+        IntcodeComputer computer = new IntcodeComputer(new int[]{3,3,1108,-1,8,3,4,3,99});
+        assertEquals(1, computer.runIO(8));
+        assertEquals(0, computer.runIO(7));
+        assertEquals(0, computer.runIO(9));
+    }
+
+    @Test
+    void testIntcodeLessThanImmediate() {
+        IntcodeComputer computer = new IntcodeComputer(new int[]{3, 3, 1107, -1, 8, 3, 4, 3, 99});
+        assertEquals(0, computer.runIO(8));
+        assertEquals(1, computer.runIO(7));
+        assertEquals(0, computer.runIO(9));
+    }
+
+    @Test
+    void testIntcodeNonZeroPosition() {
+        IntcodeComputer computer = new IntcodeComputer(new int[]{3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9});
+        assertEquals(0, computer.runIO(0));
+        assertEquals(1, computer.runIO(1));
+        assertEquals(1, computer.runIO(-1));
+    }
+
+    @Test
+    void testIntcodeNonZeroImmediate() {
+        IntcodeComputer computer = new IntcodeComputer(new int[]{3,3,1105,-1,9,1101,0,0,12,4,12,99,1});
+        assertEquals(0, computer.runIO(0));
+        assertEquals(1, computer.runIO(1));
+        assertEquals(1, computer.runIO(2));
     }
 }

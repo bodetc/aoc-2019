@@ -5,18 +5,27 @@ enum OpCode implements ValueBase<Integer> {
     MULTIPLY(2, 2, 1),
     INPUT(3, 0, 1),
     OUTPUT(4, 1, 0),
+    JUMP_IF_TRUE(5, 2, 0, true),
+    JUMP_IF_FALSE(6, 2, 0, true),
+    LESS_THAN(7, 2, 1),
+    EQUALS(8, 2, 1),
     EXIT(99, 0, 0);
 
     private final int value;
     private final int nbInputParam;
     private final int nbOutputParam;
+    private final boolean preventPositionChange;
 
-    OpCode(int value, int nbInputParam, int nbOutputParam) {
+    OpCode(int value, int nbInputParam, int nbOutputParam, boolean preventPositionChange) {
         this.value = value;
         this.nbInputParam = nbInputParam;
         this.nbOutputParam = nbOutputParam;
+        this.preventPositionChange = preventPositionChange;
     }
 
+    OpCode(int value, int nbInputParam, int nbOutputParam) {
+        this(value, nbInputParam, nbOutputParam, false);
+    }
 
     @Override
     public Integer getValue() {
@@ -32,7 +41,7 @@ enum OpCode implements ValueBase<Integer> {
     }
 
     public int getPositionChange() {
-        return nbInputParam + nbOutputParam + 1;
+        return preventPositionChange ? 0 : nbInputParam + nbOutputParam + 1;
     }
 
     public static OpCode fromInstruction(int instruction) {
