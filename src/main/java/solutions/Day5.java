@@ -13,6 +13,9 @@ public class Day5 {
 
         int output = computer.runIO(1);
         System.out.println("Output for first star: " + output);
+
+        int code = computer.runIO(5);
+        System.out.println("Output for second star: " + code);
     }
 }
 

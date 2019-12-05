@@ -22,5 +22,10 @@ public class Main {
         System.out.println("********************");
         Day4.main(args);
         System.out.println();
+
+        System.out.println("Solutions for Day 5:");
+        System.out.println("********************");
+        Day5.main(args);
+        System.out.println();
     }
 }

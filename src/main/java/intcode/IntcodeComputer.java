@@ -63,7 +63,7 @@ public class IntcodeComputer {
                     program[outputPosition] = input;
                     break;
                 case OUTPUT:
-                    System.out.println("output: " + parameters[0]);
+                    System.out.println(parameters[0]);
                     output = parameters[0];
                     break;
                 case JUMP_IF_TRUE:

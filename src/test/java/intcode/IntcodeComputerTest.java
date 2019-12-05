@@ -19,6 +19,16 @@ class IntcodeComputerTest {
     }
 
     @Test
+    void regressionTestSecondStar() {
+        int[] program = FileUtils.readCommaSeparatedValues("day5/input.txt")
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        IntcodeComputer computer = new IntcodeComputer(program);
+
+        assertEquals(3892695, computer.runIO(5));
+    }
+
+    @Test
     void testRunNounVerb() {
         int[] input = FileUtils.readCommaSeparatedValues("day2/input.txt")
                 .mapToInt(Integer::parseInt)
@@ -121,5 +131,15 @@ class IntcodeComputerTest {
         assertEquals(0, computer.runIO(0));
         assertEquals(1, computer.runIO(1));
         assertEquals(1, computer.runIO(2));
+    }
+
+    @Test
+    void testIntcodeEight() {
+        IntcodeComputer computer = new IntcodeComputer(new int[]{3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
+                1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
+                999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99});
+        assertEquals(999, computer.runIO(7));
+        assertEquals(1000, computer.runIO(8));
+        assertEquals(1001, computer.runIO(9));
     }
 }
