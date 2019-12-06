@@ -21,6 +21,6 @@ public class TreeTest {
         tree.addLink("K", "L");
         tree.addLink("E", "F");
 
-        assertEquals(42, tree.getIndirectDownlinks());
+        assertEquals(42, tree.getNumberOfIndirectParents());
     }
 }

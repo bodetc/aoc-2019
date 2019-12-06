@@ -19,7 +19,7 @@ public class Tree<T> {
         child.setParent(parent);
     }
 
-    public int getIndirectDownlinks() {
+    public int getNumberOfIndirectParents() {
         int count = 0;
         for (Node<T> node : nodes.values()) {
             while (node.getParent() != null) {
