@@ -6,7 +6,7 @@ import utils.FileUtils;
 public class Day5 {
 
     public static void main(String[] args) {
-        int[] program = FileUtils.readCommaSeparatedValues("day5/input.txt")
+        int[] program = FileUtils.readCommaSeparatedValues("day5.txt")
                 .mapToInt(Integer::parseInt)
                 .toArray();
         IntcodeComputer computer = new IntcodeComputer(program);
@@ -18,4 +18,3 @@ public class Day5 {
         System.out.println("Output for second star: " + code);
     }
 }
-

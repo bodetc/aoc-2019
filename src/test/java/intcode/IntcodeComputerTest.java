@@ -1,41 +1,11 @@
 package intcode;
 
 import org.junit.jupiter.api.Test;
-import solutions.Day2;
 import utils.FileUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class IntcodeComputerTest {
-
-    @Test
-    void regressionTestFirstStar() {
-        int[] program = FileUtils.readCommaSeparatedValues("day5/input.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
-        IntcodeComputer computer = new IntcodeComputer(program);
-
-        assertEquals(13787043, computer.runIO(1));
-    }
-
-    @Test
-    void regressionTestSecondStar() {
-        int[] program = FileUtils.readCommaSeparatedValues("day5/input.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
-        IntcodeComputer computer = new IntcodeComputer(program);
-
-        assertEquals(3892695, computer.runIO(5));
-    }
-
-    @Test
-    void testRunNounVerb() {
-        int[] input = FileUtils.readCommaSeparatedValues("day2/input.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
-
-        assertEquals(6327510, new IntcodeComputer(input).runNounVerb(12, 2));
-    }
 
     @Test
     void testIntcode1() {

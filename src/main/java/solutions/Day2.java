@@ -20,7 +20,7 @@ public class Day2 {
     }
 
     public static void main(String[] args) {
-        int[] input = FileUtils.readCommaSeparatedValues("day2/input.txt")
+        int[] input = FileUtils.readCommaSeparatedValues("day2.txt")
                 .mapToInt(Integer::parseInt)
                 .toArray();
 
