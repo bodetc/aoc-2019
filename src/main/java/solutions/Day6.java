@@ -7,7 +7,7 @@ public class Day6 {
     public static void main(String[] args) {
         Tree<String> tree = new Tree<>("COM");
 
-        FileUtils.readLines("day6/input.txt")
+        FileUtils.readLines("day6.txt")
             .forEach(line -> {
                 String[] split = line.split("\\)");
                 tree.addLink(split[0], split[1]);

@@ -12,7 +12,7 @@ class Day6Test {
     void regressionTestFirstStar() {
         Tree<String> tree = new Tree<>("COM");
 
-        FileUtils.readLines("day6/input.txt")
+        FileUtils.readLines("day6.txt")
                 .forEach(line -> {
                     String[] split = line.split("\\)");
                     tree.addLink(split[0], split[1]);
@@ -26,7 +26,7 @@ class Day6Test {
     void regressionTestSecondStar() {
         Tree<String> tree = new Tree<>("COM");
 
-        FileUtils.readLines("day6/input.txt")
+        FileUtils.readLines("day6.txt")
                 .forEach(line -> {
                     String[] split = line.split("\\)");
                     tree.addLink(split[0], split[1]);
