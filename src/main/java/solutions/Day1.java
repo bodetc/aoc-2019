@@ -17,14 +17,14 @@ public class Day1 {
                     .reduce(0, Integer::sum);
 
     public static void main(String[] args) {
-        int fuel = FileUtils.readLines("day1/input.txt")
+        int fuel = FileUtils.readLines("day1.txt")
                 .map(Integer::parseInt)
                 .map(computeFuel)
                 .reduce(0, Integer::sum);
 
         System.out.println("Total fuel: " + fuel);
 
-        int fuelWithFuelForFuel = FileUtils.readLines("day1/input.txt")
+        int fuelWithFuelForFuel = FileUtils.readLines("day1.txt")
                 .map(Integer::parseInt)
                 .map(computeFuelForFuel)
                 .reduce(0, Integer::sum);
