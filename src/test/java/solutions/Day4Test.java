@@ -2,9 +2,22 @@ package solutions;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day4Test {
+
+    @Test
+    void regressionTestFirstStar() {
+        assertEquals(454, Day4.valid(IntStream.range(402328, 864247)).count());
+    }
+
+    @Test
+    void regressionTestSecondStar() {
+        assertEquals(288, Day4.exactlyValid(IntStream.range(402328, 864247)).count());
+
+    }
 
     @Test
     void testIsValid() {

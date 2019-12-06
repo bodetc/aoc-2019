@@ -1,5 +1,6 @@
 package solutions;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.primitives.Ints;
 
 import java.util.ArrayList;
@@ -66,7 +67,8 @@ public class Day4 {
         return true;
     }
 
-    private static IntStream valid(IntStream input) {
+    @VisibleForTesting
+    static IntStream valid(IntStream input) {
         return input
                 .mapToObj(Day4::toDigits)
                 .filter(Day4::is6digits)
@@ -75,7 +77,8 @@ public class Day4 {
                 .mapToInt(Day4::toNumber);
     }
 
-    private static IntStream exactlyValid(IntStream input) {
+    @VisibleForTesting
+    static IntStream exactlyValid(IntStream input) {
         return input
                 .mapToObj(Day4::toDigits)
                 .filter(Day4::is6digits)
