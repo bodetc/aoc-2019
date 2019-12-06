@@ -22,12 +22,21 @@ public class Tree<T> {
     public int getNumberOfIndirectParents() {
         int count = 0;
         for (Node<T> node : nodes.values()) {
-            while (node.getParent() != null) {
-                node = node.getParent();
-                count++;
-            }
+            count += node.getParents().size();
         }
         return count;
+    }
+
+    public int getShortestPath(T a, T b) {
+        List<Node<T>> parentsA = getOrMakeNode(a).getParents();
+        List<Node<T>> parentsB = getOrMakeNode(b).getParents();
+
+        Node<T> commonParent = parentsA.stream()
+                .filter(nodeA -> parentsB.stream().anyMatch(nodeB -> nodeB.getValue().equals(nodeA.getValue())))
+                .findFirst()
+                .orElseThrow();
+
+        return parentsA.indexOf(commonParent)+parentsB.indexOf(commonParent);
     }
 
     private Node<T> getOrMakeNode(T data) {

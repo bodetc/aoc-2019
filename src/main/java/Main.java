@@ -27,5 +27,10 @@ public class Main {
         System.out.println("********************");
         Day5.main(args);
         System.out.println();
+
+        System.out.println("Solutions for Day 6:");
+        System.out.println("********************");
+        Day6.main(args);
+        System.out.println();
     }
 }

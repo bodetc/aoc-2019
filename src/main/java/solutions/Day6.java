@@ -15,5 +15,8 @@ public class Day6 {
 
         int parents = tree.getNumberOfIndirectParents();
         System.out.println("Output for first star: " + parents);
+
+        int shortestPath = tree.getShortestPath("YOU", "SAN");
+        System.out.println("Output for second star: " + shortestPath);
     }
 }

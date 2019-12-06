@@ -25,7 +25,17 @@ class Node<T> {
         this.parent = parent;
     }
 
-    Node<T> getParent() {
-        return parent;
+    List<Node<T>> getParents() {
+        Node<T> node = this;
+        List<Node<T>> parents = new ArrayList<>();
+        while (node.parent != null) {
+            node = node.parent;
+            parents.add(node);
+        }
+        return parents;
+    }
+
+    T getValue() {
+        return value;
     }
 }
