@@ -1,6 +1,7 @@
 package solutions;
 
 import intcode.IntcodeComputer;
+import utils.FileUtils;
 import utils.MathUtils;
 
 import java.util.Comparator;
@@ -52,5 +53,14 @@ public class Day7 {
                 .orElseThrow();
 
         return result.output;
+    }
+
+    public static void main(String[] args) {
+        int[] program = FileUtils.readCommaSeparatedValues("day7.txt")
+                .mapToInt(Integer::parseInt)
+                .toArray();
+
+        int maxThrusterSignal = searchPhases(program, 5);
+        System.out.println("Output for first star: " + maxThrusterSignal);
     }
 }
