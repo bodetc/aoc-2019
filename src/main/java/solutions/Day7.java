@@ -1,8 +1,6 @@
 package solutions;
 
-import intcode.EarlyIntcodeComputer;
 import intcode.IntcodeComputer;
-import intcode.Program;
 import utils.FileUtils;
 import utils.MathUtils;
 
@@ -15,12 +13,12 @@ public class Day7 {
         private final IntcodeComputer computer;
 
 
-        private Amplifier(int[] instructions, int phase) {
+        private Amplifier(long[] instructions, int phase) {
             this.computer = new IntcodeComputer(instructions);
             computer.run(phase);
         }
 
-        private int run(int input) {
+        private long run(long input) {
             computer.run(input);
             return computer.getLastOutput();
         }
@@ -28,16 +26,16 @@ public class Day7 {
 
     private static class Result {
         private final int[] phases;
-        private final int output;
+        private final long output;
 
-        private Result(int[] phases, int output) {
+        private Result(int[] phases, long output) {
             this.phases = phases;
             this.output = output;
         }
     }
 
-    private static Result runAmplifiers(int[] program, int[] phases) {
-        int output = 0;
+    private static Result runAmplifiers(long[] program, int[] phases) {
+        long output = 0;
         for (int phase : phases) {
             Amplifier amplifier = new Amplifier(program, phase);
             output = amplifier.run(output);
@@ -45,21 +43,21 @@ public class Day7 {
         return new Result(phases, output);
     }
 
-    static int searchPhases(int[] program, int nAmplifiers) {
+    static long searchPhases(long[] program, int nAmplifiers) {
         int[] phasesValues = IntStream.range(0, nAmplifiers).toArray();
         List<int[]> permutations = MathUtils.permutations(phasesValues);
         Result result = permutations.stream()
                 .map(phases -> runAmplifiers(program, phases))
-                .max(Comparator.comparingInt(a -> a.output))
+                .max(Comparator.comparingLong(a -> a.output))
                 .orElseThrow();
 
         return result.output;
     }
 
     public static void main(String[] args) {
-        int[] program = FileUtils.readCommaSeparatedInts("day7.txt");
+        long[] program = FileUtils.readCommaSeparatedLongs("day7.txt");
 
-        int maxThrusterSignal = searchPhases(program, 5);
+        long maxThrusterSignal = searchPhases(program, 5);
         System.out.println("Output for first star: " + maxThrusterSignal);
     }
 }

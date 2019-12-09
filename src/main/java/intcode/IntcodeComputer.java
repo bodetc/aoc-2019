@@ -11,10 +11,10 @@ public class IntcodeComputer {
     }
 
     private final Program program;
-    private final List<Integer> output = new ArrayList<>();
+    private final List<Long> output = new ArrayList<>();
     private int position = 0;
 
-    public IntcodeComputer(int[] instructions) {
+    public IntcodeComputer(long[] instructions) {
         this.program = new Program(instructions);
     }
 
@@ -22,9 +22,14 @@ public class IntcodeComputer {
         return run(null);
     }
 
-    public ReturnReason run(Integer input) {
+    public ReturnReason run(int input) {
+        return run(Long.valueOf(input));
+    }
+
+
+    public ReturnReason run(Long input) {
         while (true) {
-            int instruction = program.get(position);
+            int instruction = Math.toIntExact(program.get(position));
             OpCode opcode = OpCode.fromInstruction(instruction);
 
             if (opcode == OpCode.EXIT) {
@@ -34,7 +39,7 @@ public class IntcodeComputer {
             int numberOfInputParameters = opcode.getNumberOfInputParameters();
             ParameterMode[] modes = ParameterMode.fromInstruction(instruction, numberOfInputParameters);
 
-            int[] parameters = new int[numberOfInputParameters];
+            long[] parameters = new long[numberOfInputParameters];
             for (int i = 0; i < numberOfInputParameters; i++) {
                 int parameterPosition = position + i + 1;
                 parameters[i] = program.get(parameterPosition, modes[i]);
@@ -63,13 +68,13 @@ public class IntcodeComputer {
                     break;
                 case JUMP_IF_TRUE:
                     if (parameters[0] > 0) {
-                        position = parameters[1];
+                        position = Math.toIntExact(parameters[1]);
                         hasJumped = true;
                     }
                     break;
                 case JUMP_IF_FALSE:
                     if (parameters[0] == 0) {
-                        position = parameters[1];
+                        position = Math.toIntExact(parameters[1]);
                         hasJumped = true;
                     }
                     break;
@@ -91,15 +96,15 @@ public class IntcodeComputer {
         }
     }
 
-    public int[] getProgram() {
+    public long[] getProgram() {
         return program.toArray();
     }
 
-    public int[] getOutput() {
-        return output.stream().mapToInt(Integer::intValue).toArray();
+    public long[] getOutput() {
+        return output.stream().mapToLong(Long::longValue).toArray();
     }
 
-    public int getLastOutput() {
+    public long getLastOutput() {
         return output.get(output.size()-1);
     }
 }

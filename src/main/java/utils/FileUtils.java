@@ -32,6 +32,12 @@ public class FileUtils {
                 .toArray();
     }
 
+    public static long[] readCommaSeparatedLongs(String filename) {
+        return readCommaSeparatedValues(filename)
+                .mapToLong(Integer::parseInt)
+                .toArray();
+    }
+
     public static int[] readInts(String filename) {
         Stream<String> allLines = readLines(filename);
         return allLines.findFirst().orElseThrow().chars()

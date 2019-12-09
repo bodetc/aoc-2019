@@ -10,15 +10,15 @@ class Day2Test {
 
     @Test
     void regressionTestFirstStar() {
-        int[] input = FileUtils.readCommaSeparatedInts("day2.txt");
+        long[] input = FileUtils.readCommaSeparatedLongs("day2.txt");
 
-        int value = EarlyIntcodeComputer.runNounVerb(input,12, 2);
+        long value = EarlyIntcodeComputer.runNounVerb(input,12, 2);
         assertEquals(6327510, value);
     }
 
     @Test
     void regressionTestSecondStar() {
-        int[] input = FileUtils.readCommaSeparatedInts("day2.txt");
+        long[] input = FileUtils.readCommaSeparatedLongs("day2.txt");
 
         int[] result = Day2.searchIntcode(input, 19690720);
 

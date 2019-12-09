@@ -46,8 +46,7 @@ public class MathUtils {
         input[b] = tmp;
     }
 
-    public static int nullToZero(Integer value) {
+    public static long nullToZero(Long value) {
         return value == null ? 0 : value;
     }
-
 }

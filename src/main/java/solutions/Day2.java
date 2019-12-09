@@ -5,10 +5,10 @@ import utils.FileUtils;
 
 public class Day2 {
 
-    static int[] searchIntcode(int[] input, int targetOutput) {
+    static int[] searchIntcode(long[] input, int targetOutput) {
         for(int noun=0; noun<100; noun++) {
             for(int verb=0; verb<100; verb++) {
-                int output = EarlyIntcodeComputer.runNounVerb(input, noun, verb);
+                long output = EarlyIntcodeComputer.runNounVerb(input, noun, verb);
                 if(output==targetOutput) {
                     return new int[] {noun, verb};
                 }
@@ -18,9 +18,9 @@ public class Day2 {
     }
 
     public static void main(String[] args) {
-        int[] input = FileUtils.readCommaSeparatedInts("day2.txt");
+        long[] input = FileUtils.readCommaSeparatedLongs("day2.txt");
 
-        int value = EarlyIntcodeComputer.runNounVerb(input,12, 2);
+        long value = EarlyIntcodeComputer.runNounVerb(input,12, 2);
         System.out.println("Output for first star: " + value);
 
         int[] result = searchIntcode(input, 19690720);
