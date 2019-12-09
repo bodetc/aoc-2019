@@ -22,8 +22,7 @@ public class Day7 {
 
         private int run(int input) {
             computer.run(input);
-            int[] output = computer.getOutput();
-            return output[output.length-1];
+            return computer.getLastOutput();
         }
     }
 

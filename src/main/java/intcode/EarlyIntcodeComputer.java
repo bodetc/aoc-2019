@@ -16,7 +16,6 @@ public class EarlyIntcodeComputer {
     public static int runIO(int[] instructions, int input) {
         IntcodeComputer computer = new IntcodeComputer(instructions);
         computer.run(input);
-        int[] output = computer.getOutput();
-        return output[output.length - 1];
+        return computer.getLastOutput();
     }
 }

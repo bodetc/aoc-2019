@@ -2,7 +2,6 @@ package intcode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class IntcodeComputer {
 
@@ -98,5 +97,9 @@ public class IntcodeComputer {
 
     public int[] getOutput() {
         return output.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    public int getLastOutput() {
+        return output.get(output.size()-1);
     }
 }
