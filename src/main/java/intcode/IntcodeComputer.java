@@ -12,38 +12,39 @@ public class IntcodeComputer {
     }
 
     public int runNounVerb(int noun, int verb) {
-        int[] program = this.savedProgram.clone();
-        program[1] = noun;
-        program[2] = verb;
+        Program program = new Program(savedProgram);
+        program.set(1, noun);
+        program.set(2, verb);
 
         intcode(program, new int[]{});
-        return program[0];
+        return program.get(0, ParameterMode.IMMEDIATE);
     }
 
     int[] run() {
-        int[] program = this.savedProgram.clone();
+        Program program = new Program(savedProgram);
         intcode(program, new int[]{});
-        return program;
+        return program.toArray();
     }
 
     public int runIO(int input) {
-        int[] program = this.savedProgram.clone();
+        Program program = new Program(savedProgram);
         int[] output = intcode(program, new int[]{input});
         return output[output.length - 1];
     }
 
     public int[] runIO(int[] input) {
-        int[] program = this.savedProgram.clone();
+        Program program = new Program(savedProgram);
         return intcode(program, input);
     }
 
-    private static int[] intcode(int[] program, int[] input) {
-        int position = 0;
-        int inputPosition = 0;
+    private static int[] intcode(Program program, int[] input) {
         List<Integer> output = new ArrayList<>();
 
-        while (position < program.length) {
-            int instruction = program[position];
+        int position = 0;
+        int inputPosition = 0;
+
+        while (true) {
+            int instruction = program.get(position);
             OpCode opcode = OpCode.fromInstruction(instruction);
 
             if (opcode == OpCode.EXIT) {
@@ -56,20 +57,21 @@ public class IntcodeComputer {
             int[] parameters = new int[numberOfInputParameters];
             for (int i = 0; i < numberOfInputParameters; i++) {
                 int parameterPosition = position + i + 1;
-                parameters[i] = modes[i] == ParameterMode.IMMEDIATE ? program[parameterPosition] : program[program[parameterPosition]];
+                parameters[i] = program.get(parameterPosition, modes[i]);
             }
 
-            int outputPosition = program[position + opcode.getOutputOffset()];
+            int outputPosition = position + opcode.getOutputOffset();
+            boolean hasJumped = false;
 
             switch (opcode) {
                 case ADD:
-                    program[outputPosition] = parameters[0] + parameters[1];
+                    program.set(outputPosition, ParameterMode.POSITION, parameters[0] + parameters[1]);
                     break;
                 case MULTIPLY:
-                    program[outputPosition] = parameters[0] * parameters[1];
+                    program.set(outputPosition, ParameterMode.POSITION, parameters[0] * parameters[1]);
                     break;
                 case INPUT:
-                    program[outputPosition] = input[inputPosition];
+                    program.set(outputPosition, ParameterMode.POSITION, input[inputPosition]);
                     inputPosition++;
                     break;
                 case OUTPUT:
@@ -78,29 +80,30 @@ public class IntcodeComputer {
                 case JUMP_IF_TRUE:
                     if (parameters[0] > 0) {
                         position = parameters[1];
-                    } else {
-                        position += 3;
+                        hasJumped = true;
                     }
                     break;
                 case JUMP_IF_FALSE:
                     if (parameters[0] == 0) {
                         position = parameters[1];
-                    } else {
-                        position += 3;
+                        hasJumped = true;
                     }
                     break;
                 case LESS_THAN:
-                    program[outputPosition] = parameters[0] < parameters[1] ? 1 : 0;
+                    program.set(outputPosition, ParameterMode.POSITION, parameters[0] < parameters[1] ? 1 : 0);
                     break;
                 case EQUALS:
-                    program[outputPosition] = parameters[0] == parameters[1] ? 1 : 0;
+                    program.set(outputPosition, ParameterMode.POSITION, parameters[0] == parameters[1] ? 1 : 0);
+                    break;
+                case RELATIVE_BASE_OFFSET:
+                    program.setRelativeBaseOffset(parameters[0]);
                     break;
                 default:
                     throw new IllegalStateException();
             }
-            position += opcode.getPositionChange();
+            if (!hasJumped) {
+                position += opcode.getPositionChange();
+            }
         }
-
-        throw new IllegalStateException("Intcode program should end when encountering 99.");
     }
 }

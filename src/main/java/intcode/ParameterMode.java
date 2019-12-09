@@ -5,7 +5,8 @@ import java.util.List;
 
 enum ParameterMode implements ValueBase<Integer> {
     POSITION(0),
-    IMMEDIATE(1);
+    IMMEDIATE(1),
+    RELATIVE(2);
 
     private final int value;
 
@@ -27,7 +28,7 @@ enum ParameterMode implements ValueBase<Integer> {
             instruction = instruction / 10;
         }
 
-        while (modes.size()<numberOfInputParameters) {
+        while (modes.size()<=numberOfInputParameters+1) {
             modes.add(POSITION);
         }
 
