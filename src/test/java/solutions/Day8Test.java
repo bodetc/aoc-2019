@@ -2,12 +2,11 @@ package solutions;
 
 import org.junit.jupiter.api.Test;
 import utils.FileUtils;
-import utils.tree.Tree;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Day8Test {
 
