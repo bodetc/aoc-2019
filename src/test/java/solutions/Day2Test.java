@@ -1,6 +1,6 @@
 package solutions;
 
-import intcode.IntcodeComputer;
+import intcode.EarlyIntcodeComputer;
 import org.junit.jupiter.api.Test;
 import utils.FileUtils;
 
@@ -12,7 +12,7 @@ class Day2Test {
     void regressionTestFirstStar() {
         int[] input = FileUtils.readCommaSeparatedInts("day2.txt");
 
-        int value = new IntcodeComputer(input).runNounVerb(12, 2);
+        int value = EarlyIntcodeComputer.runNounVerb(input,12, 2);
         assertEquals(6327510, value);
     }
 

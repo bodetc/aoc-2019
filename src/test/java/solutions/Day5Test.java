@@ -1,6 +1,6 @@
 package solutions;
 
-import intcode.IntcodeComputer;
+import intcode.EarlyIntcodeComputer;
 import org.junit.jupiter.api.Test;
 import utils.FileUtils;
 
@@ -11,16 +11,12 @@ class Day5Test {
     @Test
     void regressionTestFirstStar() {
         int[] program = FileUtils.readCommaSeparatedInts("day5.txt");
-        IntcodeComputer computer = new IntcodeComputer(program);
-
-        assertEquals(13787043, computer.runIO(1));
+        assertEquals(13787043, EarlyIntcodeComputer.runIO(program,1));
     }
 
     @Test
     void regressionTestSecondStar() {
         int[] program = FileUtils.readCommaSeparatedInts("day5.txt");
-        IntcodeComputer computer = new IntcodeComputer(program);
-
-        assertEquals(3892695, computer.runIO(5));
+        assertEquals(3892695, EarlyIntcodeComputer.runIO(program,5));
     }
 }

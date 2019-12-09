@@ -2,53 +2,34 @@ package intcode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class IntcodeComputer {
 
-    private final int[] savedProgram;
-
-    public IntcodeComputer(int[] savedProgram) {
-        this.savedProgram = savedProgram;
+    private enum ReturnReason {
+        EXIT,
+        WAIT_FOR_INPUT,
     }
 
-    public int runNounVerb(int noun, int verb) {
-        Program program = new Program(savedProgram);
-        program.set(1, noun);
-        program.set(2, verb);
+    private final Program program;
+    private final List<Integer> output = new ArrayList<>();
+    private int position = 0;
 
-        intcode(program, new int[]{});
-        return program.get(0, ParameterMode.IMMEDIATE);
+    public IntcodeComputer(int[] instructions) {
+        this.program = new Program(instructions);
     }
 
-    int[] run() {
-        Program program = new Program(savedProgram);
-        intcode(program, new int[]{});
-        return program.toArray();
+    public ReturnReason run() {
+        return run(null);
     }
 
-    public int runIO(int input) {
-        Program program = new Program(savedProgram);
-        int[] output = intcode(program, new int[]{input});
-        return output[output.length - 1];
-    }
-
-    public int[] runIO(int[] input) {
-        Program program = new Program(savedProgram);
-        return intcode(program, input);
-    }
-
-    private static int[] intcode(Program program, int[] input) {
-        List<Integer> output = new ArrayList<>();
-
-        int position = 0;
-        int inputPosition = 0;
-
+    public ReturnReason run(Integer input) {
         while (true) {
             int instruction = program.get(position);
             OpCode opcode = OpCode.fromInstruction(instruction);
 
             if (opcode == OpCode.EXIT) {
-                return output.stream().mapToInt(Integer::intValue).toArray();
+                return ReturnReason.EXIT;
             }
 
             int numberOfInputParameters = opcode.getNumberOfInputParameters();
@@ -71,8 +52,12 @@ public class IntcodeComputer {
                     program.set(outputPosition, ParameterMode.POSITION, parameters[0] * parameters[1]);
                     break;
                 case INPUT:
-                    program.set(outputPosition, ParameterMode.POSITION, input[inputPosition]);
-                    inputPosition++;
+                    if(input!=null) {
+                        program.set(outputPosition, ParameterMode.POSITION, input);
+                        input = null;
+                    } else {
+                        return ReturnReason.WAIT_FOR_INPUT;
+                    }
                     break;
                 case OUTPUT:
                     output.add(parameters[0]);
@@ -105,5 +90,13 @@ public class IntcodeComputer {
                 position += opcode.getPositionChange();
             }
         }
+    }
+
+    public int[] getProgram() {
+        return program.toArray();
+    }
+
+    public int[] getOutput() {
+        return output.stream().mapToInt(Integer::intValue).toArray();
     }
 }

@@ -1,6 +1,8 @@
 package solutions;
 
+import intcode.EarlyIntcodeComputer;
 import intcode.IntcodeComputer;
+import intcode.Program;
 import utils.FileUtils;
 import utils.MathUtils;
 
@@ -11,17 +13,17 @@ import java.util.stream.IntStream;
 public class Day7 {
     private static class Amplifier {
         private final IntcodeComputer computer;
-        private final int phase;
 
 
-        private Amplifier(int[] program, int phase) {
-            this.computer = new IntcodeComputer(program);
-            this.phase = phase;
+        private Amplifier(int[] instructions, int phase) {
+            this.computer = new IntcodeComputer(instructions);
+            computer.run(phase);
         }
 
         private int run(int input) {
-            int[] output = computer.runIO(new int[]{phase, input});
-            return output[0];
+            computer.run(input);
+            int[] output = computer.getOutput();
+            return output[output.length-1];
         }
     }
 
