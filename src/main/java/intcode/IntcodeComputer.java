@@ -46,18 +46,19 @@ public class IntcodeComputer {
             }
 
             int outputPosition = position + opcode.getOutputOffset();
+            ParameterMode outputMode = modes[numberOfInputParameters];
             boolean hasJumped = false;
 
             switch (opcode) {
                 case ADD:
-                    program.set(outputPosition, parameters[0] + parameters[1]);
+                    program.set(outputPosition, outputMode, parameters[0] + parameters[1]);
                     break;
                 case MULTIPLY:
-                    program.set(outputPosition, parameters[0] * parameters[1]);
+                    program.set(outputPosition, outputMode, parameters[0] * parameters[1]);
                     break;
                 case INPUT:
                     if(input!=null) {
-                        program.set(outputPosition, input);
+                        program.set(outputPosition, outputMode, input);
                         input = null;
                     } else {
                         return ReturnReason.WAIT_FOR_INPUT;
@@ -79,10 +80,10 @@ public class IntcodeComputer {
                     }
                     break;
                 case LESS_THAN:
-                    program.set(outputPosition, parameters[0] < parameters[1] ? 1 : 0);
+                    program.set(outputPosition, outputMode, parameters[0] < parameters[1] ? 1 : 0);
                     break;
                 case EQUALS:
-                    program.set(outputPosition, parameters[0] == parameters[1] ? 1 : 0);
+                    program.set(outputPosition, outputMode, parameters[0] == parameters[1] ? 1 : 0);
                     break;
                 case RELATIVE_BASE_OFFSET:
                     program.offsetRelativeBase(parameters[0]);
