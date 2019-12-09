@@ -10,9 +10,7 @@ class Day2Test {
 
     @Test
     void regressionTestFirstStar() {
-        int[] input = FileUtils.readCommaSeparatedValues("day2.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int[] input = FileUtils.readCommaSeparatedInts("day2.txt");
 
         int value = new IntcodeComputer(input).runNounVerb(12, 2);
         assertEquals(6327510, value);
@@ -20,9 +18,7 @@ class Day2Test {
 
     @Test
     void regressionTestSecondStar() {
-        int[] input = FileUtils.readCommaSeparatedValues("day2.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int[] input = FileUtils.readCommaSeparatedInts("day2.txt");
 
         int[] result = Day2.searchIntcode(input, 19690720);
 

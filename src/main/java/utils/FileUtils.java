@@ -21,8 +21,23 @@ public class FileUtils {
         }
     }
 
-    public static Stream<String> readCommaSeparatedValues(String filename) {
+    private static Stream<String> readCommaSeparatedValues(String filename) {
         Stream<String> allLines = readLines(filename);
         return COMMA_SEPARATOR.splitAsStream(allLines.findFirst().orElseThrow());
+    }
+
+    public static int[] readCommaSeparatedInts(String filename) {
+        return readCommaSeparatedValues(filename)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+    }
+
+    public static int[] readInts(String filename) {
+        Stream<String> allLines = readLines(filename);
+        return allLines.findFirst().orElseThrow().chars()
+                .mapToObj(i -> (char) i)
+                .map(c -> Character.toString(c))
+                .mapToInt(Integer::parseInt)
+                .toArray();
     }
 }

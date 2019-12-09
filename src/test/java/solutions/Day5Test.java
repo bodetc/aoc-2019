@@ -10,9 +10,7 @@ class Day5Test {
 
     @Test
     void regressionTestFirstStar() {
-        int[] program = FileUtils.readCommaSeparatedValues("day5.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int[] program = FileUtils.readCommaSeparatedInts("day5.txt");
         IntcodeComputer computer = new IntcodeComputer(program);
 
         assertEquals(13787043, computer.runIO(1));
@@ -20,9 +18,7 @@ class Day5Test {
 
     @Test
     void regressionTestSecondStar() {
-        int[] program = FileUtils.readCommaSeparatedValues("day5.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int[] program = FileUtils.readCommaSeparatedInts("day5.txt");
         IntcodeComputer computer = new IntcodeComputer(program);
 
         assertEquals(3892695, computer.runIO(5));

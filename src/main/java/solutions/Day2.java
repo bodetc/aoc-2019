@@ -20,9 +20,7 @@ public class Day2 {
     }
 
     public static void main(String[] args) {
-        int[] input = FileUtils.readCommaSeparatedValues("day2.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int[] input = FileUtils.readCommaSeparatedInts("day2.txt");
 
         int value = new IntcodeComputer(input).runNounVerb(12, 2);
         System.out.println("Output for first star: " + value);

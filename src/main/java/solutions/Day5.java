@@ -6,9 +6,7 @@ import utils.FileUtils;
 public class Day5 {
 
     public static void main(String[] args) {
-        int[] program = FileUtils.readCommaSeparatedValues("day5.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int[] program = FileUtils.readCommaSeparatedInts("day5.txt");
         IntcodeComputer computer = new IntcodeComputer(program);
 
         int output = computer.runIO(1);

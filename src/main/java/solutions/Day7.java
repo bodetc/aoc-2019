@@ -56,9 +56,7 @@ public class Day7 {
     }
 
     public static void main(String[] args) {
-        int[] program = FileUtils.readCommaSeparatedValues("day7.txt")
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int[] program = FileUtils.readCommaSeparatedInts("day7.txt");
 
         int maxThrusterSignal = searchPhases(program, 5);
         System.out.println("Output for first star: " + maxThrusterSignal);
