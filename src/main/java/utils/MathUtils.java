@@ -45,4 +45,9 @@ public class MathUtils {
         input[a] = input[b];
         input[b] = tmp;
     }
+
+    public static int nullToZero(Integer value) {
+        return value == null ? 0 : value;
+    }
+
 }

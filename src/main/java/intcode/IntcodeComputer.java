@@ -45,14 +45,14 @@ public class IntcodeComputer {
 
             switch (opcode) {
                 case ADD:
-                    program.set(outputPosition, ParameterMode.POSITION, parameters[0] + parameters[1]);
+                    program.set(outputPosition, parameters[0] + parameters[1]);
                     break;
                 case MULTIPLY:
-                    program.set(outputPosition, ParameterMode.POSITION, parameters[0] * parameters[1]);
+                    program.set(outputPosition, parameters[0] * parameters[1]);
                     break;
                 case INPUT:
                     if(input!=null) {
-                        program.set(outputPosition, ParameterMode.POSITION, input);
+                        program.set(outputPosition, input);
                         input = null;
                     } else {
                         return ReturnReason.WAIT_FOR_INPUT;
@@ -74,13 +74,13 @@ public class IntcodeComputer {
                     }
                     break;
                 case LESS_THAN:
-                    program.set(outputPosition, ParameterMode.POSITION, parameters[0] < parameters[1] ? 1 : 0);
+                    program.set(outputPosition, parameters[0] < parameters[1] ? 1 : 0);
                     break;
                 case EQUALS:
-                    program.set(outputPosition, ParameterMode.POSITION, parameters[0] == parameters[1] ? 1 : 0);
+                    program.set(outputPosition, parameters[0] == parameters[1] ? 1 : 0);
                     break;
                 case RELATIVE_BASE_OFFSET:
-                    program.setRelativeBaseOffset(parameters[0]);
+                    program.offsetRelativeBase(parameters[0]);
                     break;
                 default:
                     throw new IllegalStateException();

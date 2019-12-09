@@ -1,13 +1,14 @@
 package intcode;
 
+import utils.MathUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Program {
     private final Map<Integer, Integer> program;
 
-    private int relativeBaseOffset = 0;
-
+    private int relativeBase = 0;
 
     public Program(int[] initialProgram) {
         program = new HashMap<>();
@@ -20,20 +21,24 @@ public class Program {
         return get(index, ParameterMode.IMMEDIATE);
     }
 
-    public Integer get(int index, ParameterMode mode) {
+    public int get(int index, ParameterMode mode) {
+        return MathUtils.nullToZero(getUnboxed(index, mode));
+    }
+
+    private Integer getUnboxed(int index, ParameterMode mode) {
         switch (mode) {
             case POSITION:
                 return program.get(program.get(index));
             case IMMEDIATE:
                 return program.get(index);
             case RELATIVE:
-                return program.get(index + relativeBaseOffset + program.get(index));
+                return program.get(relativeBase + program.get(index));
         }
         throw new IllegalStateException("Unsupported mode");
     }
 
     public void set(int index, int value) {
-        set(index, ParameterMode.IMMEDIATE, value);
+        set(index, ParameterMode.POSITION, value);
     }
 
     public void set(int index, ParameterMode mode, int value) {
@@ -45,13 +50,13 @@ public class Program {
                 program.put(index, value);
                 break;
             case RELATIVE:
-                program.put(index + relativeBaseOffset + program.get(index), value);
+                program.put(relativeBase + program.get(index), value);
                 break;
         }
     }
 
-    public void setRelativeBaseOffset(int relativeBaseOffset) {
-        this.relativeBaseOffset = relativeBaseOffset;
+    public void offsetRelativeBase(int offset) {
+        this.relativeBase += offset;
     }
 
     public int[] toArray() {

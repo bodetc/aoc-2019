@@ -28,7 +28,7 @@ enum ParameterMode implements ValueBase<Integer> {
             instruction = instruction / 10;
         }
 
-        while (modes.size()<=numberOfInputParameters+1) {
+        while (modes.size()<numberOfInputParameters) {
             modes.add(POSITION);
         }
 
