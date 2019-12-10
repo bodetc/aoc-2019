@@ -5,7 +5,7 @@ import utils.FileUtils;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class Day8 {
+public class Day08 {
 
     static int[][][] layerize(int[] input, int width, int height) {
         int layers = input.length / (width * height);
@@ -54,7 +54,7 @@ public class Day8 {
     }
 
     public static void main(String[] args) {
-        int[] inputInts = FileUtils.readInts("day8.txt");
+        int[] inputInts = FileUtils.readInts("day08.txt");
         int[][][] input = layerize(inputInts, 25, 6);
 
         int[][] fistStarLayer = Arrays.stream(input)

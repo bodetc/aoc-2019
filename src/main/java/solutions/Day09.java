@@ -3,9 +3,9 @@ package solutions;
 import intcode.IntcodeComputer;
 import utils.FileUtils;
 
-public class Day9 {
+public class Day09 {
     public static void main(String[] args) {
-        long[] program = FileUtils.readCommaSeparatedLongs("day9.txt");
+        long[] program = FileUtils.readCommaSeparatedLongs("day09.txt");
         IntcodeComputer computer = new IntcodeComputer(program);
         computer.run(1);
 

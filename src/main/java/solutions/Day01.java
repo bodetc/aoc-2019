@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-public class Day1 {
+public class Day01 {
 
     static final UnaryOperator<Integer> computeFuel = mass -> mass / 3 - 2;
     private static final Predicate<Integer> isMassPositive = mass -> mass > 0;
@@ -17,14 +17,14 @@ public class Day1 {
                     .reduce(0, Integer::sum);
 
     public static void main(String[] args) {
-        int fuel = FileUtils.readLines("day1.txt")
+        int fuel = FileUtils.readLines("day01.txt")
                 .map(Integer::parseInt)
                 .map(computeFuel)
                 .reduce(0, Integer::sum);
 
         System.out.println("Total fuel: " + fuel);
 
-        int fuelWithFuelForFuel = FileUtils.readLines("day1.txt")
+        int fuelWithFuelForFuel = FileUtils.readLines("day01.txt")
                 .map(Integer::parseInt)
                 .map(computeFuelForFuel)
                 .reduce(0, Integer::sum);

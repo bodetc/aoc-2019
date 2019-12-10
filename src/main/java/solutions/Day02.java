@@ -3,7 +3,7 @@ package solutions;
 import intcode.EarlyIntcodeComputer;
 import utils.FileUtils;
 
-public class Day2 {
+public class Day02 {
 
     static int[] searchIntcode(long[] input, int targetOutput) {
         for(int noun=0; noun<100; noun++) {
@@ -18,7 +18,7 @@ public class Day2 {
     }
 
     public static void main(String[] args) {
-        long[] input = FileUtils.readCommaSeparatedLongs("day2.txt");
+        long[] input = FileUtils.readCommaSeparatedLongs("day02.txt");
 
         long value = EarlyIntcodeComputer.runNounVerb(input,12, 2);
         System.out.println("Output for first star: " + value);

@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Day7 {
+public class Day07 {
     private static class Amplifier {
         private final IntcodeComputer computer;
 
@@ -55,7 +55,7 @@ public class Day7 {
     }
 
     public static void main(String[] args) {
-        long[] program = FileUtils.readCommaSeparatedLongs("day7.txt");
+        long[] program = FileUtils.readCommaSeparatedLongs("day07.txt");
 
         long maxThrusterSignal = searchPhases(program, 5);
         System.out.println("Output for first star: " + maxThrusterSignal);

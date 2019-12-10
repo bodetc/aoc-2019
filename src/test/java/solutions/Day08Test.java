@@ -8,25 +8,25 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class Day8Test {
+class Day08Test {
 
     @Test
     void regressionTestFirstStar() {
-        int[] inputInts = FileUtils.readInts("day8.txt");
-        int[][][] input = Day8.layerize(inputInts, 25, 6);
+        int[] inputInts = FileUtils.readInts("day08.txt");
+        int[][][] input = Day08.layerize(inputInts, 25, 6);
 
         int[][] fistStarLayer = Arrays.stream(input)
-                .min(Comparator.comparingInt(a -> Day8.countOf(a, 0)))
+                .min(Comparator.comparingInt(a -> Day08.countOf(a, 0)))
                 .orElseThrow();
 
-        int firstStartAnswer = Day8.countOf(fistStarLayer, 1) * Day8.countOf(fistStarLayer, 2);
+        int firstStartAnswer = Day08.countOf(fistStarLayer, 1) * Day08.countOf(fistStarLayer, 2);
         assertEquals(2159, firstStartAnswer);
     }
 
     @Test
     void testLayerize() {
         int[] input = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2};
-        int[][][] output = Day8.layerize(input, 3, 2);
+        int[][][] output = Day08.layerize(input, 3, 2);
         int[][][] expected = new int[][][]{
                 {
                         {1, 2, 3},
@@ -49,8 +49,8 @@ class Day8Test {
     @Test
     void testStack() {
         int[] input = new int[]{0, 2, 2, 2, 1, 1, 2, 2, 2, 2, 1, 2, 0, 0, 0, 0};
-        int[][][] layers = Day8.layerize(input, 2, 2);
-        int[][] image = Day8.stack(layers);
+        int[][][] layers = Day08.layerize(input, 2, 2);
+        int[][] image = Day08.stack(layers);
 
         int[][] expected = new int[][]{
                 {0, 1},

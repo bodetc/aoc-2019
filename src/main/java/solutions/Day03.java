@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 import static utils.FileUtils.COMMA_SEPARATOR;
 
-public class Day3 {
+public class Day03 {
     private enum Direction {
         R, L, U, D;
 

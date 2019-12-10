@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Day4 {
+public class Day04 {
 
     private static int[] toDigits(int number) {
         List<Integer> digits = new ArrayList<>(6);
@@ -70,21 +70,21 @@ public class Day4 {
     @VisibleForTesting
     static IntStream valid(IntStream input) {
         return input
-                .mapToObj(Day4::toDigits)
-                .filter(Day4::is6digits)
-                .filter(Day4::hasTwoSameAdjacentDigits)
-                .filter(Day4::isMonotonouslyIncreasing)
-                .mapToInt(Day4::toNumber);
+                .mapToObj(Day04::toDigits)
+                .filter(Day04::is6digits)
+                .filter(Day04::hasTwoSameAdjacentDigits)
+                .filter(Day04::isMonotonouslyIncreasing)
+                .mapToInt(Day04::toNumber);
     }
 
     @VisibleForTesting
     static IntStream exactlyValid(IntStream input) {
         return input
-                .mapToObj(Day4::toDigits)
-                .filter(Day4::is6digits)
-                .filter(Day4::hasExactlyTwoSameAdjacentDigits)
-                .filter(Day4::isMonotonouslyIncreasing)
-                .mapToInt(Day4::toNumber);
+                .mapToObj(Day04::toDigits)
+                .filter(Day04::is6digits)
+                .filter(Day04::hasExactlyTwoSameAdjacentDigits)
+                .filter(Day04::isMonotonouslyIncreasing)
+                .mapToInt(Day04::toNumber);
     }
 
     static boolean isValid(int number) {

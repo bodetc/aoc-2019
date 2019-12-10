@@ -6,10 +6,10 @@ import utils.FileUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class Day9Test {
+class Day09Test {
     @Test
     void regressionTestFirstStar() {
-        long[] program = FileUtils.readCommaSeparatedLongs("day9.txt");
+        long[] program = FileUtils.readCommaSeparatedLongs("day09.txt");
         IntcodeComputer computer = new IntcodeComputer(program);
         computer.run(1);
 
@@ -18,7 +18,7 @@ class Day9Test {
 
     @Test
     void regressionTestSecondStar() {
-        long[] program = FileUtils.readCommaSeparatedLongs("day9.txt");
+        long[] program = FileUtils.readCommaSeparatedLongs("day09.txt");
         IntcodeComputer computer = new IntcodeComputer(program);
         computer.run(2);
 

@@ -6,11 +6,11 @@ import utils.FileUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Day2Test {
+class Day02Test {
 
     @Test
     void regressionTestFirstStar() {
-        long[] input = FileUtils.readCommaSeparatedLongs("day2.txt");
+        long[] input = FileUtils.readCommaSeparatedLongs("day02.txt");
 
         long value = EarlyIntcodeComputer.runNounVerb(input,12, 2);
         assertEquals(6327510, value);
@@ -18,9 +18,9 @@ class Day2Test {
 
     @Test
     void regressionTestSecondStar() {
-        long[] input = FileUtils.readCommaSeparatedLongs("day2.txt");
+        long[] input = FileUtils.readCommaSeparatedLongs("day02.txt");
 
-        int[] result = Day2.searchIntcode(input, 19690720);
+        int[] result = Day02.searchIntcode(input, 19690720);
 
         int noun=result[0];
         int verb=result[1];
