@@ -55,7 +55,12 @@ public class AsteroidField {
         return MathUtils.correctAngle(theta) + 2. * Math.PI * blockingAsteroids(origin, other);
     }
 
-    public List<Point> laserOrder(Point origin) {
+    public List<Point> laserOrder() {
+        return laserOrder(bestAsteroid());
+    }
+
+    @VisibleForTesting
+    List<Point> laserOrder(Point origin) {
         return asteroids.stream()
                 .filter(Predicate.not(origin::equals))
                 .sorted(Comparator.comparingDouble(other -> laserAngle(origin, other)))

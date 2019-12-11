@@ -18,4 +18,12 @@ class Day10Test {
         assertEquals(best, field.bestAsteroid());
         assertEquals(214, field.visibleAsteroids(best));
     }
+
+    @Test
+    void regressionTestSecondStar() {
+        Stream<String> input = FileUtils.readLines("day10.txt");
+        AsteroidField field = new AsteroidField(input);
+        Point answer = new Point(5, 2);
+        assertEquals(answer, field.laserOrder().get(199));
+    }
 }
