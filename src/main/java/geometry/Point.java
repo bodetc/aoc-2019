@@ -17,7 +17,7 @@ public class Point {
         return Math.abs(other.x - x) + Math.abs(other.y - y);
     }
 
-    Point addVector(Vector vector) {
+    public Point addVector(Vector vector) {
         switch (vector.direction) {
             case R:
                 return new Point(x + vector.distance, y);
@@ -55,5 +55,10 @@ public class Point {
     @Override
     public String toString() {
         return "(" + x + "," + y + ")";
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
     }
 }

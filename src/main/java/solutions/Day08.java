@@ -68,7 +68,7 @@ public class Day08 {
         int[][] image = stack(input);
         for (int h = 0; h < image.length; h++) {
             for (int w = 0; w < image[h].length; w++) {
-                System.out.print(image[h][w] == 1 ? 'X' : ' ');
+                System.out.print(image[h][w] == 1 ? '█' : ' ');
             }
             System.out.println();
         }

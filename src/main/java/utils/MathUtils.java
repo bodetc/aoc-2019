@@ -46,10 +46,6 @@ public class MathUtils {
         input[b] = tmp;
     }
 
-    public static long nullToZero(Long value) {
-        return value == null ? 0 : value;
-    }
-
     public static double correctAngle(double angle) {
         if(angle<0) {
             return angle + 2.*Math.PI;

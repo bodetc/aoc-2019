@@ -1,8 +1,7 @@
 package intcode;
 
-import utils.MathUtils;
+import utils.HashMapWithDefault;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Program {
@@ -10,8 +9,8 @@ public class Program {
 
     private int relativeBase = 0;
 
-    public Program(long[] initialProgram) {
-        program = new HashMap<>();
+    Program(long[] initialProgram) {
+        program = new HashMapWithDefault<>(0L);
         for (int i = 0; i < initialProgram.length; i++) {
             program.put(i, initialProgram[i]);
         }
@@ -22,10 +21,6 @@ public class Program {
     }
 
     public long get(int index, ParameterMode mode) {
-        return MathUtils.nullToZero(getUnboxed(index, mode));
-    }
-
-    private Long getUnboxed(int index, ParameterMode mode) {
         switch (mode) {
             case POSITION:
                 return program.get(Math.toIntExact(program.get(index)));
@@ -37,11 +32,7 @@ public class Program {
         throw new IllegalStateException("Unsupported mode");
     }
 
-    public void set(int index, long value) {
-        set(index, ParameterMode.POSITION, value);
-    }
-
-    public void set(int index, ParameterMode mode, long value) {
+    void set(int index, ParameterMode mode, long value) {
         switch (mode) {
             case POSITION:
                 program.put(Math.toIntExact(program.get(index)), value);

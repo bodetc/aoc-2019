@@ -1,17 +1,21 @@
 package geometry;
 
-class Vector {
+public class Vector {
     final Direction direction;
     final int distance;
 
+    public Vector(Direction direction, int distance) {
+        this.direction = direction;
+        this.distance = distance;
+    }
+
     Vector(Vector other) {
-        this.direction = other.direction;
-        this.distance = other.distance;
+        this(other.direction, other.distance);
     }
 
     Vector(String vector) {
-        this.direction = Direction.valueOf(vector.substring(0, 1));
-        this.distance = Integer.parseInt(vector.substring(1));
+        this(Direction.valueOf(vector.substring(0, 1)),
+                Integer.parseInt(vector.substring(1)));
     }
 
     boolean isHorizontal() {

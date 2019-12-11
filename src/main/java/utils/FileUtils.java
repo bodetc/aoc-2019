@@ -34,7 +34,7 @@ public class FileUtils {
 
     public static long[] readCommaSeparatedLongs(String filename) {
         return readCommaSeparatedValues(filename)
-                .mapToLong(Integer::parseInt)
+                .mapToLong(Long::parseLong)
                 .toArray();
     }
 

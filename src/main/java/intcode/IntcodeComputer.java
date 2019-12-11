@@ -5,7 +5,7 @@ import java.util.List;
 
 public class IntcodeComputer {
 
-    private enum ReturnReason {
+    public enum ReturnReason {
         EXIT,
         WAIT_FOR_INPUT,
     }
@@ -57,7 +57,7 @@ public class IntcodeComputer {
                     program.set(outputPosition, outputMode, parameters[0] * parameters[1]);
                     break;
                 case INPUT:
-                    if(input!=null) {
+                    if (input != null) {
                         program.set(outputPosition, outputMode, input);
                         input = null;
                     } else {
@@ -106,6 +106,10 @@ public class IntcodeComputer {
     }
 
     public long getLastOutput() {
-        return output.get(output.size()-1);
+        return output.get(output.size() - 1);
+    }
+
+    public void clearOutput() {
+        output.clear();
     }
 }

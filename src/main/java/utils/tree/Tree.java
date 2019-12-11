@@ -40,11 +40,6 @@ public class Tree<T> {
     }
 
     private Node<T> getOrMakeNode(T data) {
-        Node<T> node = nodes.get(data);
-        if (node == null) {
-            node = new Node<>(data);
-            nodes.put(data, node);
-        }
-        return node;
+        return nodes.computeIfAbsent(data, Node::new);
     }
 }
