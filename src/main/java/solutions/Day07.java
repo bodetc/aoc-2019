@@ -1,9 +1,11 @@
 package solutions;
 
 import intcode.IntcodeComputer;
+import intcode.IntcodeComputer.ReturnReason;
 import utils.FileUtils;
 import utils.MathUtils;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -18,46 +20,49 @@ public class Day07 {
             computer.run(phase);
         }
 
-        private long run(long input) {
-            computer.run(input);
+        private ReturnReason run(long input) {
+            return computer.run(input);
+        }
+
+        private long getLastOutput(){
             return computer.getLastOutput();
         }
     }
 
-    private static class Result {
-        private final int[] phases;
-        private final long output;
+    private static long runAmplifiers(long[] program, int[] phases) {
+        Amplifier[] amplifiers = Arrays.stream(phases)
+                .mapToObj(phase -> new Amplifier(program, phase))
+                .toArray(Amplifier[]::new);
 
-        private Result(int[] phases, long output) {
-            this.phases = phases;
-            this.output = output;
-        }
-    }
-
-    private static Result runAmplifiers(long[] program, int[] phases) {
         long output = 0;
-        for (int phase : phases) {
-            Amplifier amplifier = new Amplifier(program, phase);
-            output = amplifier.run(output);
+        ReturnReason returnReason = ReturnReason.WAIT_FOR_INPUT;
+
+        while (returnReason==ReturnReason.WAIT_FOR_INPUT) {
+            for (Amplifier amplifier : amplifiers) {
+                returnReason = amplifier.run(output);
+                output = amplifier.getLastOutput();
+            }
         }
-        return new Result(phases, output);
+        return output;
     }
 
-    static long searchPhases(long[] program, int nAmplifiers) {
-        int[] phasesValues = IntStream.range(0, nAmplifiers).toArray();
+    static long searchPhases(long[] program, int start, int end) {
+        int[] phasesValues = IntStream.range(start, end).toArray();
         List<int[]> permutations = MathUtils.permutations(phasesValues);
-        Result result = permutations.stream()
-                .map(phases -> runAmplifiers(program, phases))
-                .max(Comparator.comparingLong(a -> a.output))
-                .orElseThrow();
 
-        return result.output;
+        return permutations.stream()
+                .map(phases -> runAmplifiers(program, phases))
+                .max(Comparator.comparingLong(Long::longValue))
+                .orElseThrow();
     }
 
     public static void main(String[] args) {
         long[] program = FileUtils.readCommaSeparatedLongs("day07.txt");
 
-        long maxThrusterSignal = searchPhases(program, 5);
+        long maxThrusterSignal = searchPhases(program, 0,5);
         System.out.println("Output for first star: " + maxThrusterSignal);
+
+        long maxSignal = searchPhases(program, 5,10);
+        System.out.println("Output for second star: " + maxSignal);
     }
 }
