@@ -3,8 +3,8 @@ package geometry;
 import utils.MathUtils;
 
 public class Point {
-    final int x;
-    final int y;
+    public final int x;
+    public final int y;
 
     public static final Point ORIGIN = new Point(0, 0);
 

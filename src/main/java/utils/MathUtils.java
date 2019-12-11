@@ -49,4 +49,14 @@ public class MathUtils {
     public static long nullToZero(Long value) {
         return value == null ? 0 : value;
     }
+
+    public static double correctAngle(double angle) {
+        if(angle<0) {
+            return angle + 2.*Math.PI;
+        } else if(angle>2.*Math.PI) {
+            return angle - 2.*Math.PI;
+        } else {
+            return angle;
+        }
+    }
 }

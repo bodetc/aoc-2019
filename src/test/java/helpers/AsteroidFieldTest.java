@@ -1,9 +1,11 @@
 package helpers;
 
+import com.google.common.collect.ImmutableList;
 import geometry.Point;
 import org.junit.jupiter.api.Test;
 import utils.FileUtils;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,5 +69,49 @@ class AsteroidFieldTest {
         Point best = new Point(11, 13);
         assertEquals(best, field.bestAsteroid());
         assertEquals(210, field.visibleAsteroids(best));
+    }
+
+    @Test
+    void testAngle() {
+        AsteroidField field = new AsteroidField(ImmutableList.<String>of().stream());
+        Point origin = new Point(5, 5);
+        assertEquals(0., field.laserAngle(origin, new Point(5, 0)));
+        assertEquals(Math.PI / 2., field.laserAngle(origin, new Point(10, 5)));
+        assertEquals(Math.PI, field.laserAngle(origin, new Point(5, 10)));
+        assertEquals(3. * Math.PI / 2., field.laserAngle(origin, new Point(0, 5)));
+    }
+
+    @Test
+    void testLaser() {
+        AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroidfield/laser.txt"));
+        Point origin = AsteroidField.findX(FileUtils.readLines("helpers/asteroidfield/laser.txt"));
+        List<Point> laserOrder = field.laserOrder(origin);
+        assertEquals(new Point(8, 1), laserOrder.get(0));
+        assertEquals(new Point(9, 0), laserOrder.get(1));
+        assertEquals(new Point(9, 1), laserOrder.get(2));
+        assertEquals(new Point(10, 0), laserOrder.get(3));
+        assertEquals(new Point(9, 2), laserOrder.get(4));
+        assertEquals(new Point(11, 1), laserOrder.get(5));
+        assertEquals(new Point(12, 1), laserOrder.get(6));
+        assertEquals(new Point(11, 2), laserOrder.get(7));
+        assertEquals(new Point(15, 1), laserOrder.get(8));
+    }
+
+    @Test
+    void testLaser5() {
+        AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroidfield/test5.txt"));
+        Point origin = field.bestAsteroid();
+        List<Point> laserOrder = field.laserOrder(origin);
+        assertEquals(new Point(11, 12), laserOrder.get(0));
+        assertEquals(new Point(12, 1), laserOrder.get(1));
+        assertEquals(new Point(12, 2), laserOrder.get(2));
+        assertEquals(new Point(12, 8), laserOrder.get(9));
+        assertEquals(new Point(16, 0), laserOrder.get(19));
+        assertEquals(new Point(16, 9), laserOrder.get(49));
+        assertEquals(new Point(10, 16), laserOrder.get(99));
+        assertEquals(new Point(9, 6), laserOrder.get(198));
+        assertEquals(new Point(8, 2), laserOrder.get(199));
+        assertEquals(new Point(10, 9), laserOrder.get(200));
+        assertEquals(new Point(11, 1), laserOrder.get(298));
     }
 }
