@@ -54,4 +54,11 @@ class AsteroidFieldTest {
             assertEquals(asteroid4, actual.get(3));
         }
     }
+
+    @Test
+    void testEnergy() {
+        AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroid-field/test-input.txt"));
+        field.timesteps(10);
+        assertEquals(179, field.energy());
+    }
 }

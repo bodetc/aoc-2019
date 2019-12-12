@@ -41,6 +41,10 @@ class Asteroid3D {
         return Integer.compare(other, position);
     }
 
+    public int energy() {
+        return position.taxiNorm() * velocity.taxiNorm();
+    }
+
     private boolean equals(Asteroid3D other) {
         return position.equals(other.position) && velocity.equals(other.velocity);
     }

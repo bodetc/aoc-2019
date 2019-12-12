@@ -25,6 +25,10 @@ public class Point3D {
         return new Point3D(x+other.x, y+other.y, z+other.z);
     }
 
+    public int taxiNorm() {
+        return Math.abs(x)+Math.abs(y)+Math.abs(z);
+    }
+
     private boolean equals(Point3D other) {
         return x == other.x && y == other.y && z == other.z;
     }
