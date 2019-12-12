@@ -1,117 +1,57 @@
 package helpers;
 
-import com.google.common.collect.ImmutableList;
-import geometry.Point;
+import geometry.Point3D;
 import org.junit.jupiter.api.Test;
 import utils.FileUtils;
+import utils.StringUtils;
 
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AsteroidFieldTest {
 
-    @Test
-    void testVisibleAsteroids() {
-        Stream<String> input = FileUtils.readLines("helpers/asteroidfield/test1.txt");
-        AsteroidField field = new AsteroidField(input);
-        assertEquals(7, field.visibleAsteroids(new Point(1, 0)));
-        assertEquals(7, field.visibleAsteroids(new Point(4, 0)));
-        assertEquals(6, field.visibleAsteroids(new Point(0, 2)));
-        assertEquals(7, field.visibleAsteroids(new Point(1, 2)));
-        assertEquals(7, field.visibleAsteroids(new Point(2, 2)));
-        assertEquals(7, field.visibleAsteroids(new Point(3, 2)));
-        assertEquals(5, field.visibleAsteroids(new Point(4, 2)));
-        assertEquals(7, field.visibleAsteroids(new Point(4, 3)));
-        assertEquals(8, field.visibleAsteroids(new Point(3, 4)));
-        assertEquals(7, field.visibleAsteroids(new Point(4, 4)));
+    private static final Pattern STEPS_FORMAT = Pattern.compile("After ([-+]?\\d+) steps:");
+    private static final Pattern ASTEROID_FORMAT = Pattern.compile("pos=<x=\\s*([-+]?\\d+), y=\\s*([-+]?\\d+), z=\\s*([-+]?\\d+)>, vel=<x=\\s*([-+]?\\d+), y=\\s*([-+]?\\d+), z=\\s*([-+]?\\d+)>");
+
+    private static int getStep(String line) {
+        List<String> groups = StringUtils.getGroups(STEPS_FORMAT, line);
+        return Integer.parseInt(groups.get(0));
+    }
+
+    private static Asteroid3D getAsteroid(String line) {
+        int[] input = StringUtils.getGroups(ASTEROID_FORMAT, line)
+                .stream()
+                .mapToInt(Integer::parseInt)
+                .toArray();
+
+        Point3D position = new Point3D(input[0], input[1], input[2]);
+        Point3D velocity = new Point3D(input[3], input[4], input[5]);
+        return new Asteroid3D(position, velocity);
     }
 
     @Test
-    void testBestAsteroid() {
-        Stream<String> input = FileUtils.readLines("helpers/asteroidfield/test1.txt");
-        AsteroidField field = new AsteroidField(input);
-        assertEquals(new Point(3, 4), field.bestAsteroid());
-    }
+    void testTimesteps() {
+        List<String> result = FileUtils.readLines("helpers/asteroid-field/test-results.txt")
+                .collect(Collectors.toList());
+        for (int i = 0; i < result.size(); i += 5) {
+            int step = getStep(result.get(i));
+            AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroid-field/test-input.txt"));
+            field.timesteps(step);
 
-    @Test
-    void testBestAsteroid2() {
-        Stream<String> input = FileUtils.readLines("helpers/asteroidfield/test2.txt");
-        AsteroidField field = new AsteroidField(input);
-        Point best = new Point(5, 8);
-        assertEquals(best, field.bestAsteroid());
-        assertEquals(33, field.visibleAsteroids(best));
-    }
+            Asteroid3D asteroid1 = getAsteroid(result.get(i + 1));
+            Asteroid3D asteroid2 = getAsteroid(result.get(i + 2));
+            Asteroid3D asteroid3 = getAsteroid(result.get(i + 3));
+            Asteroid3D asteroid4 = getAsteroid(result.get(i + 4));
 
-    @Test
-    void testBestAsteroid3() {
-        Stream<String> input = FileUtils.readLines("helpers/asteroidfield/test3.txt");
-        AsteroidField field = new AsteroidField(input);
-        Point best = new Point(1, 2);
-        assertEquals(best, field.bestAsteroid());
-        assertEquals(35, field.visibleAsteroids(best));
-    }
+            List<Asteroid3D> actual = field.getAsteroids();
 
-    @Test
-    void testBestAsteroid4() {
-        Stream<String> input = FileUtils.readLines("helpers/asteroidfield/test4.txt");
-        AsteroidField field = new AsteroidField(input);
-        Point best = new Point(6, 3);
-        assertEquals(best, field.bestAsteroid());
-        assertEquals(41, field.visibleAsteroids(best));
-    }
-
-    @Test
-    void testBestAsteroid5() {
-        Stream<String> input = FileUtils.readLines("helpers/asteroidfield/test5.txt");
-        AsteroidField field = new AsteroidField(input);
-        Point best = new Point(11, 13);
-        assertEquals(best, field.bestAsteroid());
-        assertEquals(210, field.visibleAsteroids(best));
-    }
-
-    @Test
-    void testAngle() {
-        AsteroidField field = new AsteroidField(ImmutableList.<String>of().stream());
-        Point origin = new Point(5, 5);
-        assertEquals(0., field.laserAngle(origin, new Point(5, 0)));
-        assertEquals(Math.PI / 2., field.laserAngle(origin, new Point(10, 5)));
-        assertEquals(Math.PI, field.laserAngle(origin, new Point(5, 10)));
-        assertEquals(3. * Math.PI / 2., field.laserAngle(origin, new Point(0, 5)));
-    }
-
-    @Test
-    void testLaser() {
-        AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroidfield/laser.txt"));
-        Point origin = AsteroidField.findX(FileUtils.readLines("helpers/asteroidfield/laser.txt"));
-        List<Point> laserOrder = field.laserOrder(origin);
-        assertEquals(new Point(8, 1), laserOrder.get(0));
-        assertEquals(new Point(9, 0), laserOrder.get(1));
-        assertEquals(new Point(9, 1), laserOrder.get(2));
-        assertEquals(new Point(10, 0), laserOrder.get(3));
-        assertEquals(new Point(9, 2), laserOrder.get(4));
-        assertEquals(new Point(11, 1), laserOrder.get(5));
-        assertEquals(new Point(12, 1), laserOrder.get(6));
-        assertEquals(new Point(11, 2), laserOrder.get(7));
-        assertEquals(new Point(15, 1), laserOrder.get(8));
-    }
-
-    @Test
-    void testLaser5() {
-        AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroidfield/test5.txt"));
-        Point origin = field.bestAsteroid();
-        List<Point> laserOrder = field.laserOrder(origin);
-        assertEquals(new Point(11, 12), laserOrder.get(0));
-        assertEquals(new Point(12, 1), laserOrder.get(1));
-        assertEquals(new Point(12, 2), laserOrder.get(2));
-        assertEquals(new Point(12, 8), laserOrder.get(9));
-        assertEquals(new Point(16, 0), laserOrder.get(19));
-        assertEquals(new Point(16, 9), laserOrder.get(49));
-        assertEquals(new Point(10, 16), laserOrder.get(99));
-        assertEquals(new Point(9, 6), laserOrder.get(198));
-        assertEquals(new Point(8, 2), laserOrder.get(199));
-        assertEquals(new Point(10, 9), laserOrder.get(200));
-        assertEquals(new Point(11, 1), laserOrder.get(298));
+            assertEquals(asteroid1, actual.get(0));
+            assertEquals(asteroid2, actual.get(1));
+            assertEquals(asteroid3, actual.get(2));
+            assertEquals(asteroid4, actual.get(3));
+        }
     }
 }

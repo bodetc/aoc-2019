@@ -1,7 +1,7 @@
 package solutions;
 
 import geometry.Point;
-import helpers.AsteroidField;
+import helpers.AsteroidLaser;
 import org.junit.jupiter.api.Test;
 import utils.FileUtils;
 
@@ -13,7 +13,7 @@ class Day10Test {
     @Test
     void regressionTestFirstStar() {
         Stream<String> input = FileUtils.readLines("day10.txt");
-        AsteroidField field = new AsteroidField(input);
+        AsteroidLaser field = new AsteroidLaser(input);
         Point best = new Point(8, 16);
         assertEquals(best, field.bestAsteroid());
         assertEquals(214, field.visibleAsteroids(best));
@@ -22,7 +22,7 @@ class Day10Test {
     @Test
     void regressionTestSecondStar() {
         Stream<String> input = FileUtils.readLines("day10.txt");
-        AsteroidField field = new AsteroidField(input);
+        AsteroidLaser field = new AsteroidLaser(input);
         Point answer = new Point(5, 2);
         assertEquals(answer, field.laserOrder().get(199));
     }

@@ -1,7 +1,7 @@
 package solutions;
 
 import geometry.Point;
-import helpers.AsteroidField;
+import helpers.AsteroidLaser;
 import utils.FileUtils;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class Day10 {
     public static void main(String[] args) {
         Stream<String> input = FileUtils.readLines("day10.txt");
-        AsteroidField field = new AsteroidField(input);
+        AsteroidLaser field = new AsteroidLaser(input);
         Point bestAsteroid = field.bestAsteroid();
         System.out.println("Best point: " + bestAsteroid);
         long visibleAsteroids = field.visibleAsteroids(bestAsteroid);
