@@ -61,4 +61,34 @@ class AsteroidFieldTest {
         field.timesteps(10);
         assertEquals(179, field.energy());
     }
+
+    @Test
+    void testTimesteps2() {
+        List<String> result = FileUtils.readLines("helpers/asteroid-field/test-results2.txt")
+                .collect(Collectors.toList());
+        for (int i = 0; i < result.size(); i += 5) {
+            int step = getStep(result.get(i));
+            AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroid-field/test-input2.txt"));
+            field.timesteps(step);
+
+            Asteroid3D asteroid1 = getAsteroid(result.get(i + 1));
+            Asteroid3D asteroid2 = getAsteroid(result.get(i + 2));
+            Asteroid3D asteroid3 = getAsteroid(result.get(i + 3));
+            Asteroid3D asteroid4 = getAsteroid(result.get(i + 4));
+
+            List<Asteroid3D> actual = field.getAsteroids();
+
+            assertEquals(asteroid1, actual.get(0));
+            assertEquals(asteroid2, actual.get(1));
+            assertEquals(asteroid3, actual.get(2));
+            assertEquals(asteroid4, actual.get(3));
+        }
+    }
+
+    @Test
+    void testEnergy2() {
+        AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroid-field/test-input2.txt"));
+        field.timesteps(100);
+        assertEquals(1940, field.energy());
+    }
 }
