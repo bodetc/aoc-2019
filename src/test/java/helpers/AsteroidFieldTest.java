@@ -91,4 +91,10 @@ class AsteroidFieldTest {
         field.timesteps(100);
         assertEquals(1940, field.energy());
     }
+
+    @Test
+    void testFindCycleTime() {
+        long cycleTime = AsteroidField.findCycleTime(FileUtils.readLines("helpers/asteroid-field/test-input.txt"));
+        assertEquals(2772, cycleTime);
+    }
 }

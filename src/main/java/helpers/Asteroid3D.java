@@ -9,8 +9,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 class Asteroid3D {
-    private Point3D position;
-    private Point3D velocity;
+    private Asteroid1D x, y, z;
 
     Asteroid3D(Point3D position) {
         this(position, Point3D.ORIGIN);
@@ -18,8 +17,9 @@ class Asteroid3D {
 
     @VisibleForTesting
     Asteroid3D(Point3D position, Point3D velocity) {
-        this.position = position;
-        this.velocity = velocity;
+        this.x = new Asteroid1D(position.x, velocity.x);
+        this.y = new Asteroid1D(position.y, velocity.y);
+        this.z = new Asteroid1D(position.z, velocity.z);
     }
 
     public void applyGravity(List<Asteroid3D> asteroids) {
@@ -27,26 +27,34 @@ class Asteroid3D {
                 .filter(Predicate.not(this::equals))
                 .collect(Collectors.toList());
         collect.forEach(asteroid ->
-                velocity = velocity.add(gravityChange(position.x, asteroid.position.x),
-                        gravityChange(position.y, asteroid.position.y),
-                        gravityChange(position.z, asteroid.position.z)
-                ));
+                {
+                    x.applyGravity(asteroid.x);
+                    y.applyGravity(asteroid.y);
+                    z.applyGravity(asteroid.z);
+                }
+        );
     }
 
     public void applyVelocity() {
-        position = position.add(velocity.x, velocity.y, velocity.z);
-    }
-
-    private static int gravityChange(int position, int other) {
-        return Integer.compare(other, position);
+        x.applyVelocity();
+        y.applyVelocity();
+        z.applyVelocity();
     }
 
     public int energy() {
-        return position.taxiNorm() * velocity.taxiNorm();
+        return getPosition().taxiNorm() * getVelocity().taxiNorm();
+    }
+
+    Point3D getPosition() {
+        return new Point3D(x.position, y.position, z.position);
+    }
+
+    Point3D getVelocity() {
+        return new Point3D(x.velocity, y.velocity, z.velocity);
     }
 
     private boolean equals(Asteroid3D other) {
-        return position.equals(other.position) && velocity.equals(other.velocity);
+        return getPosition().equals(other.getPosition()) && getVelocity().equals(other.getVelocity());
     }
 
     @Override
@@ -56,6 +64,6 @@ class Asteroid3D {
 
     @Override
     public String toString() {
-        return "<pos=" + position + ", vel=" + velocity + ">";
+        return "<pos=" + getPosition() + ", vel=" + getVelocity() + ">";
     }
 }

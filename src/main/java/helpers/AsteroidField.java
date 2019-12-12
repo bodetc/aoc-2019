@@ -49,4 +49,18 @@ public class AsteroidField {
     public List<Asteroid3D> getAsteroids() {
         return asteroids;
     }
+
+    public static long findCycleTime(Stream<String> coordinates) {
+        AsteroidField field = new AsteroidField(coordinates);
+        List<Asteroid3D> initialAsteroids = field.getAsteroids().stream()
+                .map(asteroid3D -> new Asteroid3D(asteroid3D.getPosition(), asteroid3D.getVelocity()))
+                .collect(Collectors.toList());
+
+        long time = 0;
+        do {
+            field.timestep();
+            time++;
+        } while (!initialAsteroids.equals(field.getAsteroids()));
+        return time;
+    }
 }

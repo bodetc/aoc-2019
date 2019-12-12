@@ -9,5 +9,8 @@ public class Day12 {
         field.timesteps(1000);
         int energy = field.energy();
         System.out.println("Output for first star: " + energy);
+
+        long time = AsteroidField.findCycleTime(FileUtils.readLines("day12.txt"));
+        System.out.println("Output for second star: " + time);
     }
 }
