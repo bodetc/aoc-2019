@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AsteroidFieldTest {
+class AsteroidField3DTest {
 
     private static final Pattern STEPS_FORMAT = Pattern.compile("After ([-+]?\\d+) steps:");
     private static final Pattern ASTEROID_FORMAT = Pattern.compile("pos=<x=\\s*([-+]?\\d+), y=\\s*([-+]?\\d+), z=\\s*([-+]?\\d+)>, vel=<x=\\s*([-+]?\\d+), y=\\s*([-+]?\\d+), z=\\s*([-+]?\\d+)>");
@@ -38,7 +38,7 @@ class AsteroidFieldTest {
                 .collect(Collectors.toList());
         for (int i = 0; i < result.size(); i += 5) {
             int step = getStep(result.get(i));
-            AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroid-field/test-input.txt"));
+            AsteroidField3D field = new AsteroidField3D(FileUtils.readLines("helpers/asteroid-field/test-input.txt"));
             field.timesteps(step);
 
             Asteroid3D asteroid1 = getAsteroid(result.get(i + 1));
@@ -57,7 +57,7 @@ class AsteroidFieldTest {
 
     @Test
     void testEnergy() {
-        AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroid-field/test-input.txt"));
+        AsteroidField3D field = new AsteroidField3D(FileUtils.readLines("helpers/asteroid-field/test-input.txt"));
         field.timesteps(10);
         assertEquals(179, field.energy());
     }
@@ -68,7 +68,7 @@ class AsteroidFieldTest {
                 .collect(Collectors.toList());
         for (int i = 0; i < result.size(); i += 5) {
             int step = getStep(result.get(i));
-            AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroid-field/test-input2.txt"));
+            AsteroidField3D field = new AsteroidField3D(FileUtils.readLines("helpers/asteroid-field/test-input2.txt"));
             field.timesteps(step);
 
             Asteroid3D asteroid1 = getAsteroid(result.get(i + 1));
@@ -87,14 +87,8 @@ class AsteroidFieldTest {
 
     @Test
     void testEnergy2() {
-        AsteroidField field = new AsteroidField(FileUtils.readLines("helpers/asteroid-field/test-input2.txt"));
+        AsteroidField3D field = new AsteroidField3D(FileUtils.readLines("helpers/asteroid-field/test-input2.txt"));
         field.timesteps(100);
         assertEquals(1940, field.energy());
-    }
-
-    @Test
-    void testFindCycleTime() {
-        long cycleTime = AsteroidField.findCycleTime(FileUtils.readLines("helpers/asteroid-field/test-input.txt"));
-        assertEquals(2772, cycleTime);
     }
 }

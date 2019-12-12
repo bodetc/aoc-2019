@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-class Asteroid1D {
-    int position;
-    int velocity;
+class Asteroid1D extends Asteroid<Integer, Asteroid1D> {
 
     Asteroid1D(int position) {
         this(position, 0);
@@ -16,40 +14,20 @@ class Asteroid1D {
 
     @VisibleForTesting
     Asteroid1D(int position, int velocity) {
-        this.position = position;
-        this.velocity = velocity;
+        super(position, velocity, Asteroid1D.class);
     }
 
     Asteroid1D(Asteroid1D other) {
-        this(other.position, other.velocity);
+        super(other);
     }
 
-    public void applyGravity(List<Asteroid1D> asteroids) {
-        asteroids.stream()
-                .filter(Predicate.not(this::equals))
-                .collect(Collectors.toList())
-                .forEach(this::applyGravity);
-    }
-
-    void applyGravity(Asteroid1D asteroid) {
+    @Override
+    public void applyGravity(Asteroid1D asteroid) {
         velocity += Integer.compare(asteroid.position, position);
     }
 
+    @Override
     public void applyVelocity() {
         position += velocity;
-    }
-
-    private boolean equals(Asteroid1D other) {
-        return position == other.position && velocity == other.velocity;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other instanceof Asteroid1D && equals((Asteroid1D) other);
-    }
-
-    @Override
-    public String toString() {
-        return "<pos=" + position + ", vel=" + velocity + ">";
     }
 }
