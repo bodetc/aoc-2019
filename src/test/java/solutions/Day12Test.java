@@ -16,8 +16,20 @@ class Day12Test {
     }
 
     @Test
+    void regressionTestSecondStar() {
+        long cycleTime = Day12.findCycleTime(FileUtils.readLines("day12.txt"));
+        assertEquals(327636285682704L, cycleTime);
+    }
+
+    @Test
     void testFindCycleTime() {
         long cycleTime = Day12.findCycleTime(FileUtils.readLines("helpers/asteroid-field/test-input.txt"));
         assertEquals(2772, cycleTime);
+    }
+
+    @Test
+    void testFindCycleTime2() {
+        long cycleTime = Day12.findCycleTime(FileUtils.readLines("helpers/asteroid-field/test-input2.txt"));
+        assertEquals(4686774924L, cycleTime);
     }
 }
