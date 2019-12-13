@@ -1,9 +1,7 @@
 package solutions;
 
-import helpers.PaintingRobot;
-import intcode.IntcodeComputer;
+import intcode.painting.PaintingRobot;
 import utils.FileUtils;
-import utils.HashMapWithDefault;
 
 public class Day11 {
     public static void main(String[] args) {

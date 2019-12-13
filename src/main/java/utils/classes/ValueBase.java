@@ -1,4 +1,4 @@
-package intcode;
+package utils.classes;
 
 import java.util.Arrays;
 

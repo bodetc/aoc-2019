@@ -1,6 +1,6 @@
 package intcode;
 
-import utils.HashMapWithDefault;
+import utils.classes.HashMapWithDefault;
 
 import java.util.Map;
 

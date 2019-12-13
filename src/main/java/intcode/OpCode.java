@@ -1,5 +1,7 @@
 package intcode;
 
+import utils.classes.ValueBase;
+
 enum OpCode implements ValueBase<Integer> {
     ADD(1, 2, 1),
     MULTIPLY(2, 2, 1),

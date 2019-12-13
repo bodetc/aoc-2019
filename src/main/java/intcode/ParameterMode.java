@@ -1,5 +1,7 @@
 package intcode;
 
+import utils.classes.ValueBase;
+
 import java.util.ArrayList;
 import java.util.List;
 

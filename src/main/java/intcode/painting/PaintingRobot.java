@@ -1,35 +1,15 @@
-package helpers;
+package intcode.painting;
 
 import geometry.Direction;
 import geometry.Point;
 import geometry.Vector;
 import intcode.IntcodeComputer;
 import intcode.IntcodeComputer.ReturnReason;
-import intcode.ValueBase;
-import utils.HashMapWithDefault;
+import utils.classes.HashMapWithDefault;
 
 import java.util.Map;
 
 public class PaintingRobot {
-    private enum Color implements ValueBase<Integer> {
-        BLACK(0),
-        WHITE(1);
-
-        private final int value;
-
-        Color(int value) {
-            this.value = value;
-        }
-
-        @Override
-        public Integer getValue() {
-            return value;
-        }
-
-        public static Color fromValue(int value) {
-            return ValueBase.fromValue(values(), value);
-        }
-    }
 
     private final IntcodeComputer computer;
     private final Map<Point, Color> hull;
@@ -61,7 +41,7 @@ public class PaintingRobot {
 
     private ReturnReason runOnce() {
         Color currentColor = hull.get(position);
-        ReturnReason returnReason = computer.run(currentColor.value);
+        ReturnReason returnReason = computer.run(currentColor.getValue());
         long[] output = computer.getOutput();
         // Paint panel
         hull.put(position, Color.fromValue(Math.toIntExact(output[0])));

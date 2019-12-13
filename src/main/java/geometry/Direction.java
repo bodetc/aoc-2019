@@ -1,6 +1,6 @@
 package geometry;
 
-import intcode.ValueBase;
+import utils.classes.ValueBase;
 
 public enum Direction implements ValueBase<Integer> {
     U(0),

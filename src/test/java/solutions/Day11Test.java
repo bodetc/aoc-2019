@@ -1,7 +1,6 @@
 package solutions;
 
-import helpers.PaintingRobot;
-import intcode.IntcodeComputer;
+import intcode.painting.PaintingRobot;
 import org.junit.jupiter.api.Test;
 import utils.FileUtils;
 
