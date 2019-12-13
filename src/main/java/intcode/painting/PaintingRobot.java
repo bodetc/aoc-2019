@@ -64,6 +64,6 @@ public class PaintingRobot {
     }
 
     public void printHull() {
-        PrintCharacter.print(hull);
+        PrintCharacter.print(hull, true);
     }
 }
