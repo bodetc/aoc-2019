@@ -1,7 +1,6 @@
 package utils.classes;
 
 import geometry.Point;
-import utils.MathUtils;
 
 import java.util.Collections;
 import java.util.List;
