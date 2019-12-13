@@ -6,6 +6,7 @@ import geometry.Vector;
 import intcode.IntcodeComputer;
 import intcode.IntcodeComputer.ReturnReason;
 import utils.classes.HashMapWithDefault;
+import utils.classes.PrintCharacter;
 
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class PaintingRobot {
         direction = Direction.U;
         position = Point.ORIGIN;
 
-        if(startOnWhite) {
+        if (startOnWhite) {
             hull.put(Point.ORIGIN, Color.WHITE);
         }
     }
@@ -63,16 +64,6 @@ public class PaintingRobot {
     }
 
     public void printHull() {
-        int minX = hull.keySet().stream().mapToInt(key -> key.x).min().orElseThrow();
-        int maxX = hull.keySet().stream().mapToInt(key -> key.x).max().orElseThrow();
-        int minY = hull.keySet().stream().mapToInt(key -> key.y).min().orElseThrow();
-        int maxY = hull.keySet().stream().mapToInt(key -> key.y).max().orElseThrow();
-
-        for (int y = maxY; y >= minY; y--) {
-            for (int x = minX; x <= maxX; x++) {
-                System.out.print(hull.get(new Point(x, y)) == Color.WHITE ? '█' : ' ');
-            }
-            System.out.println();
-        }
+        PrintCharacter.print(hull);
     }
 }
