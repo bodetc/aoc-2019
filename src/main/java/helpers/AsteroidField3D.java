@@ -18,14 +18,14 @@ public class AsteroidField3D extends AsteroidField<Point3D, Asteroid3D> {
     }
 
     public int energy() {
-        return asteroids.stream()
+        return streamAsteroids()
                 .mapToInt(Asteroid3D::energy)
                 .sum();
     }
 
     private static final Pattern COORDINATES_FORMAT = Pattern.compile("<x=\\s*([-+]?\\d+), y=\\s*([-+]?\\d+), z=\\s*([-+]?\\d+)>");
 
-    private static Point3D parseCoordinates(String input) {
+    public static Point3D parseCoordinates(String input) {
         int[] split = StringUtils.getGroups(COORDINATES_FORMAT, input)
                 .stream()
                 .mapToInt(Integer::parseInt)

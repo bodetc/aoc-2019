@@ -47,12 +47,48 @@ public class MathUtils {
     }
 
     public static double correctAngle(double angle) {
-        if(angle<0) {
-            return angle + 2.*Math.PI;
-        } else if(angle>2.*Math.PI) {
-            return angle - 2.*Math.PI;
+        if (angle < 0) {
+            return angle + 2. * Math.PI;
+        } else if (angle > 2. * Math.PI) {
+            return angle - 2. * Math.PI;
         } else {
             return angle;
         }
+    }
+
+    public static long lcm(List<Long> numbers) {
+        switch (numbers.size()) {
+            case 0:
+                return 0;
+            case 1:
+                return numbers.get(0);
+            case 2:
+                return lcm(numbers.get(0), numbers.get(1));
+            default:
+                return lcm(numbers.get(0), lcm(numbers.subList(1, numbers.size())));
+        }
+    }
+
+    public static long lcm(long m, long n) {
+        if (m == n) {
+            return m;
+        }
+        if (m == 1 || n == 1) {
+            return m * n;
+        }
+
+        // this section increases the value of mm until it is greater
+        // than or equal to nn, then does it again when the lesser
+        // becomes the greater--if they aren't equal.
+        long mm = m, nn = n;
+        while (mm != nn) {
+            while (mm < nn) {
+                mm += m;
+            }
+            while (nn < mm) {
+                nn += n;
+            }
+        }
+        return mm;
     }
 }

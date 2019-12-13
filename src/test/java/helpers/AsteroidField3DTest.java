@@ -46,7 +46,7 @@ class AsteroidField3DTest {
             Asteroid3D asteroid3 = getAsteroid(result.get(i + 3));
             Asteroid3D asteroid4 = getAsteroid(result.get(i + 4));
 
-            List<Asteroid3D> actual = field.getAsteroids();
+            List<Asteroid3D> actual = field.streamAsteroids().collect(Collectors.toList());
 
             assertEquals(asteroid1, actual.get(0));
             assertEquals(asteroid2, actual.get(1));
@@ -76,7 +76,7 @@ class AsteroidField3DTest {
             Asteroid3D asteroid3 = getAsteroid(result.get(i + 3));
             Asteroid3D asteroid4 = getAsteroid(result.get(i + 4));
 
-            List<Asteroid3D> actual = field.getAsteroids();
+            List<Asteroid3D> actual = field.streamAsteroids().collect(Collectors.toList());
 
             assertEquals(asteroid1, actual.get(0));
             assertEquals(asteroid2, actual.get(1));

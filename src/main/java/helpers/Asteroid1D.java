@@ -2,13 +2,9 @@ package helpers;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+public class Asteroid1D extends Asteroid<Integer, Asteroid1D> {
 
-class Asteroid1D extends Asteroid<Integer, Asteroid1D> {
-
-    Asteroid1D(int position) {
+    public Asteroid1D(int position) {
         this(position, 0);
     }
 

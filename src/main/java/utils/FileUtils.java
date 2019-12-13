@@ -26,12 +26,6 @@ public class FileUtils {
         return COMMA_SEPARATOR.splitAsStream(allLines.findFirst().orElseThrow());
     }
 
-    public static int[] readCommaSeparatedInts(String filename) {
-        return readCommaSeparatedValues(filename)
-                .mapToInt(Integer::parseInt)
-                .toArray();
-    }
-
     public static long[] readCommaSeparatedLongs(String filename) {
         return readCommaSeparatedValues(filename)
                 .mapToLong(Long::parseLong)

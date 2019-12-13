@@ -1,17 +1,44 @@
 package solutions;
 
-import helpers.Asteroid3D;
+import com.google.common.collect.ImmutableList;
+import geometry.Point3D;
+import helpers.AsteroidField1D;
 import helpers.AsteroidField3D;
 import utils.FileUtils;
+import utils.MathUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Day12 {
-    public static long findCycleTime(Stream<String> coordinates) {
+    private static final List<ToIntFunction<Point3D>> TO_COMPONENTS = ImmutableList.of(
+            p -> p.x,
+            p -> p.y,
+            p -> p.z
+    );
 
-        return 2772;
+    public static long findCycleTime(Stream<String> input) {
+        List<Point3D> points = input
+                .map(AsteroidField3D::parseCoordinates)
+                .collect(Collectors.toList());
+
+        List<Long> cycles = new ArrayList<>();
+        for (ToIntFunction<Point3D> toComponent : TO_COMPONENTS) {
+            int[] coordinates = points.stream()
+                    .mapToInt(toComponent)
+                    .toArray();
+
+            AsteroidField1D field = new AsteroidField1D(coordinates);
+            long cycle = field.runUntilLoop();
+
+            System.out.println(cycle);
+            cycles.add(cycle);
+        }
+
+        return MathUtils.lcm(cycles);
     }
 
     public static void main(String[] args) {
