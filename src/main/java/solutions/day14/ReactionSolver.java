@@ -12,9 +12,40 @@ public class ReactionSolver {
         this.reactions = reactions;
     }
 
-    private long solveReaction(String chemical) {
+    public long solveReaction() {
+        return solveReaction(ORE, 1);
+    }
+
+    private long oreForFuel(long fuelAmount) {
+        return solveReaction(ORE, fuelAmount);
+    }
+
+    public long fuelForOre(long oreAmount) {
+        long lowerBound = oreAmount / oreForFuel(1);
+        long upperBound = 2 * lowerBound;
+
+        while (oreForFuel(upperBound)<oreAmount) {
+            lowerBound*=2;
+            upperBound*=2;
+        }
+
+        while (lowerBound < upperBound-1) {
+            long fuel = (lowerBound + upperBound) / 2;
+            long ore = oreForFuel(fuel);
+            if (ore == oreAmount) {
+                return fuel;
+            } else if (ore < oreAmount) {
+                lowerBound = fuel;
+            } else {
+                upperBound = fuel;
+            }
+        }
+        return lowerBound;
+    }
+
+    private long solveReaction(String chemical, long fuelAmount) {
         if (FUEL.equals(chemical)) {
-            return 1;
+            return fuelAmount;
         }
         return reactions.stream()
                 .mapToLong(reaction -> {
@@ -23,13 +54,9 @@ public class ReactionSolver {
                         return 0;
                     } else {
                         return input.amount
-                                * (long) Math.ceil((double) solveReaction(reaction.output.name) / (double) reaction.output.amount);
+                                * (long) Math.ceil((double) solveReaction(reaction.output.name, fuelAmount) / (double) reaction.output.amount);
                     }
                 })
                 .sum();
-    }
-
-    public long solveReaction() {
-        return solveReaction(ORE);
     }
 }
